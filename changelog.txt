@@ -1,0 +1,462 @@
+-------------------------------------------------------------------------------------------------------:
+Changelog: Zombotech Apocalypse Project - by n0minal & ipsTeam
+-------------------------------------------------------------------------------------------------------:
+
+(Quarta-feira): 22/07/2015
+
+Adicionado:
+-Projeto privado criado no github
+-Arquivos-base para a re-estruturação do gamemode
+-Módulos essenciais já existentes nas versões anteriores
+-Código base de conexão NPCS e nova estruturação de módulos
+-Movimentação básica da câmera do login
+-Criado Novo design da HUD (versão final)
+
+Removido:
+-Arquivos desnecessários que não serão usados
+
+Alterado:
+-N/A
+
+Fixado:
+-Chaves do main() que faziam a callback OnGameModeInit ser chamada mais de uma vez
+-Conexão de NPCS mal sucedidas por falta de arquivos
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quinta-feira): 23/07/2015
+
+Adicionado:
+-Módulos para sistema de habilidades dos personagens
+-Módulos para sistema de necessidades dos personagens
+-Tabela de habilidades na database
+-Tabela de necessidades personagens
+-Radiação adcionada ao painel de necessidades
+-Barra de EXP e level adcionada à HUD
+
+Removido:
+-Colunas de habilidades da tabela de usuários da database
+-Colunas de necessidades de personagens
+
+Alterado:
+-Melhor organização na database do servidor
+
+Fixado:
+-N/A
+
+-------------------------------------------------------------------------------------------------------:
+
+(Sexta-feira): 24/07/2015
+
+Adicionado:
+-Importada base antiga do gamemode
+-Importados arquivos necessários para debug e run do gamemode
+
+Removido:
+-Gamemode pra teste de conexões NPC
+
+Alterado:
+-Estrutura de habilidades e pontos de habilidade de players na database/script
+-Servidor atualizado pra 0.3.7 R2-1
+-Plugin YSF atualizado pra versão atual do servidor
+
+Fixado:
+-Bug do registro onde dados não eram carregados corretamente após se registrar
+
+-------------------------------------------------------------------------------------------------------:
+
+(Sábado): 25/07/2015
+
+Adicionado:
+-Importado gamemode tools para auxílio nos testes
+-Iniciada a criação da iprogress include para controle de progress bars
+-Nova HUD importada pro servidor
+
+Removido:
+-Pilhas de códigos de mapas/veículos do primeiro script
+-Código de debugs e testes da iBranch e iCMD no gamemode
+-Progress bar include
+-Células de textdraws que não estavam a ser usadas pelo servidor
+
+Alterado:
+-Request class agora aparece apenas após o registro/login
+-Scripts de mapas reativados para debug e testes
+-Design do inventário melhorado
+-Design do loot preview melhorado
+
+Fixado:
+-Ordem de carregamento de plugins que usam sampgdk que causava warnings no console
+-Pequeno bug no sscanf do servidor causado por falha de script
+
+-------------------------------------------------------------------------------------------------------:
+
+(Domingo): 26/06/2015
+
+Adicionado:
+-Arquivos necessários para funcionamento do colAndreas (.cadb)
+-Virtual world e inteiror na estrutura de enumeração de informações de itens dropados
+-Virtual world e interior de itens dropados agora são salvos na database
+-Uma série de comandos para testes e auxílios na locomoção pelo servidor
+
+Removido:
+-Códigos antigos de debugs
+-Filterscript tools
+-Filterscript de edição de textdraws e seus arquivos
+
+Alterado:
+-O servidor agora salvará o virtual world e interior de itens
+-Comparações de virtual world e interior agora são feitas no loot
+-Pequenas infomações ao remover um item dropado
+-Limite de itens aumentado de 50.000 para 200.000
+-Rotação de itens dropados agora será definida no catálogo de itens
+-Servidor agora mostra mensagem de erro caso tente desequipar um item com inventário cheio
+
+Fixado:
+-Warning reports que apareciam na tela do player não devem aparecer mais 
+
+-------------------------------------------------------------------------------------------------------:
+
+(Segunda-feira): 27/07/2015
+
+Adcionado:
+-Hash com SHA256 para senhas de usuários
+
+Removido:
+-Pequenos códigos de debug
+
+Alterado:
+-Pequenos detalhes que faltavam sobre interior e virtual world no drop de itens por players
+-Faltavam returns que faziam vários comandos serem chamados
+-Instruções de rotação e zoom do preview model dos itens agora são definidas ao receber o item
+-Alguns itens tiveram seus nomes modificados (frutas)
+-Não é possível mais ver informações do loot ao abrir o inventário
+
+Fixado:
+-Preview model de itens não apareciam no primeiro slot ao recebê-los com inventário aberto
+
+-------------------------------------------------------------------------------------------------------:
+
+(Terça-feira): 28/07/2015
+
+Adicionado:
+-Stocks em funções que ainda não são usadas (prevenir warnings na compilação)
+-Split de objetos
+-Alguns novos itens ao catálogo (munições)
+
+Removido:
+-N/A
+
+Alterado:
+-Pequenas mudanças no design do inventário (botões de página)
+-Otimizações nas variáveis locais do servidor
+
+Fixado:
+-Equipar armas com mesmo tipo de munição não davam munição ao usuário
+-Problema crítico ao equipar munição de diferentes tipos
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quarta-feira): 29/07/2015 - Poucos updates devido à minha atualização de S.O
+
+Adicionado:
+-HUD agora mostra a arma atual do player 
+
+Removido:
+-N/A
+
+Alterado:
+-N/A
+
+Fixado:
+-N/A
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quinta-feira): 30/07/2015
+
+Adicionado:
+-Itens no catálogo (munições)
+-Comando teste para criar de objetos
+
+Removido:
+-N/A 
+
+Alterado:
+-Estrutura interna de identificação de munições e tipos de arma
+
+Fixado:
+-Preview da arma aparecia ao atualizar a arma com o inventário aberto
+-Pequenas informações incorretas sobre slot de armas
+-Bug crítico onde se perdia um item ao equipar outro no mesmo slot
+
+-------------------------------------------------------------------------------------------------------:
+
+(Sexta-feira): 31/07/2015
+
+Adicionado:
+-Dialog para informar a quantidade do item que deseja criar 
+
+Removido:
+-N/A 
+
+Alterado:
+-N/A 
+
+Fixado:
+-Falhas no script que acessavam indexes inválida da array de itens equipados
+
+-------------------------------------------------------------------------------------------------------:
+
+(Sábado): 08/08/2015
+
+Adicionado:
+-Dialog para informar a quantidade do item que deseja criar
+-Agora é possível usar objetos que tenham efeitos corporais no personagem
+
+Removido:
+-N/A 
+
+Alterado:
+-Apenas os preview models necessários são atualizados ao dropar um item
+-Maior precisão entre a "mira" e o looting de objetos
+
+Fixado:
+-N/A
+
+-------------------------------------------------------------------------------------------------------:
+
+(Domingo): 09/08/2015
+
+Adicionado:
+-Salvamento automático de dados da conta e itens a cada 5 minutos
+-Alguns itens ao catálogo
+-Roupas agora podem ser equipadas/desequipadas
+-Nova estrutura na tabela de itens equipados na database (suporte à attachments)
+
+Removido:
+-4 textdraws da mira, apenas o ponto central permanecerá para melhor aceitação e visualização do gameplay 
+
+Alterado:
+-A mira de itens agora some ao selecionar o rpg como arma (antes era só sniper)
+-Reduzido número de preview models que atualizam ao selecionar slots, apenas os necessários atualizarão
+-Roupas não-expiráveis agora tem durabilidade contada
+
+Fixado:
+-Ao equipar RPG, a arma não era recebida
+-Bug crítico que duplicava itens dos usuários após o request class
+-Itens permanentes agora não tem data incorreta no inventário
+
+-------------------------------------------------------------------------------------------------------:
+
+(Segunda-feira): 10/08/2015
+
+Adicionado:
+-N/A
+
+Removido:
+-N/A 
+
+Alterado:
+-N/A
+
+Fixado:
+-Estrutura de salvamento de cores de itens equipados
+-Pequeno bug que faziam objetos equipados serem carregados para o player errado
+
+-------------------------------------------------------------------------------------------------------:
+
+(Terça-feira): 11/08/2015
+
+Adicionado:
+-Agora é possivel editar rotação, tamanho e posição de roupas e da mochila
+-Alguns itens no catálogo (backpacks, padlock etc)
+-Informações de attachments agora são salvas corretamente
+-Usabilidade de alguns novos itens (backpacks e padlock)
+-Reiniciada a criação do plugin iNodes
+-Definido limite de tamanho e posição máximos de attachments respectivamente de -1.0 à 1.0 e -2.5 à 2.5
+
+Removido:
+-N/A 
+
+Alterado:
+-Mensagens de salvamento agora aparecem apenas para o servidor (console)
+
+Fixado:
+-Padlock era removido mesmo se não fosse expirável
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quarta-feira): 12/08/2015
+
+Adcionado:
+-Agora é possível desequipar backpacks
+-Alguns novos itens ao catálogo (roupas, cabelos, etc)
+
+Removido:
+-N/A
+
+Alterado:
+-Todos os parâmetros de itens equipados agora são limpos ao removê-lo
+-Refeita estrutura do slot 8 dos equipamentos, o slot de mochilas agora funciona sem erros
+
+
+Fixado:
+-Era possível usar backpack com outro backpack equipado
+-Index incorreta fazia com que o backpack salvasse no id errado
+
+-------------------------------------------------------------------------------------------------------:
+
+(Sexta-feira): 14/08/2015
+
+Adcionado:
+-N/A
+
+Removido:
+-Códigos de debug
+-Antiga estrutura de deletar itens
+
+Alterado:
+-Refeita estrutura de reciclagem de item id's, agora sem lag, atraso ou super-processamento
+-Refeita a lógica de compatibilidade entre id's de itens e itens equipados
+
+Fixado:
+-id incorreto no qual bugava o iron backpack de ser equipado
+-Agora você recebe a arma branca ao equipá-la
+-Algumas mensagens tinham cores incorretas
+-Uma série de pequenos erros que prejudicavam o desempenho do mysql
+
+-------------------------------------------------------------------------------------------------------:
+
+(Sábado): 15/08/2015
+
+Adcionado:
+-Agora é possível editar e salvar roupas
+
+Removido:
+-N/A
+
+Alterado:
+-N/A
+
+Fixado:
+-Faltava uma pequena instrução em SQL (ORDER BY) para retornar ids corretamente
+-Ao reciclar um item o id do usuário não era alterado
+-Ao desequipar roupas, o attachment não era removido
+-Descrição de alguns objetos eram grandes demais e bugavam a interface do loot
+-Pequeno erro de script que fazia com que os itens não fossem salvos ao desconectar
+-Era recebido o backpack errado ao carregar o backpack 4
+
+-------------------------------------------------------------------------------------------------------:
+
+(Domingo): 16/08/2015
+
+Adcionado:
+-Algumas otimizações no script
+
+Removido:
+-N/A
+
+Alterado:
+-Refeita reciclagem de ids para itens equipados
+
+Fixado:
+-Bug crítico no qual deletava itens equipados de todos os usuários
+
+-------------------------------------------------------------------------------------------------------:
+
+(Segunda-feira): 17/08/2015
+
+Adcionado:
+-Ao mirar com uma arma, a mira de pickup some.
+
+Removido:
+-N/A
+
+Alterado:
+-Refeito sistema de pegar itens, agora o sistema é muito mais preciso por usar camera target object
+-A mira de pickup agora não é mais necessária porém será opcional ao player habilitá-la
+-A mira de pickup foi movida para o centro da câmera
+-A mira de pickup foi desabilitada por padrão
+
+
+Fixado:
+-Algumas queries causavam warnings
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quarta-feira): 19/08/2015
+
+Adcionado:
+-N/A
+
+Removido:
+-N/A
+
+Alterado:
+-Refeito sistema de equipamentos (terminado)
+-Queries de carregamento de informação do backpack agora são threaded
+-Redefinidos limites de tamanho e posição de attachments (roupas)
+
+Fixado:
+-Todos os bugs ainda restantes do inventário
+-Um id incorreto impedia que se editasse o slot 5 (roupas)
+-Attachments agora carregam corretamente (finalmente!)
+-Attachments desapareciam ao morrer e spawnar novamente
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quarta-feira): 16/09/2015
+
+Adcionado:
+-Mais itens ao catálogo (minérios, recuros naturais etc)
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quinta-feira): 17/09/2015
+
+Fixado:
+-Exploit na iBranch que causava loop infinito e crash no servidor
+-Alguns objetos não possuiam textlabels
+
+-------------------------------------------------------------------------------------------------------:
+
+(Sábado): 19/09/2015
+
+Alterado:
+-Modificada estrutura da objectsdata (adcionado suporte à multi-ids, rotação espacial, stack e max stack amount)
+
+Adcionado:
+-Itens agora podem ter texturas/cores
+
+-------------------------------------------------------------------------------------------------------:
+
+(Terça-feira): 22/09/2015
+
+Adicionado:
+-Array com todos os nodes do gta sa (ruas e calçadas)
+
+Fixado:
+-iBranch ainda causava updates desincronizados
+
+Alterado:
+-Non-threaded queries agora são threaded (-apenas as que não usam cachê imediato-) para evitar problemas 
+
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quarta-feira): 23/09/2015
+
+Adcionado:
+-Cores dos itens agora são mostradas no preview model do loot
+
+Fixado:
+-Alguns objetos invisíveis eram criados pelo mapa (erro nas texturas)
+-Alguns objetos poderiam ter cor incorreta no inventário
+
+-------------------------------------------------------------------------------------------------------:
+
+(A fazer):
+-Adcionar sons e animações no inventário
+-Modificar HUD (health bar, loot crosshair)
+-Tornar o loot mais preciso (mira)
+-Fixar bug de perder armas ao morrer

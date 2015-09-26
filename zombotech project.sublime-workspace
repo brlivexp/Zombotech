@@ -1,0 +1,463 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"DAMAGE_",
+				"DAMAGE_TYPE_PUNCH_BITE"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"Load",
+				"LoadInventoryPageItems"
+			],
+			[
+				"spac",
+				"word-spacing"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"border",
+				"border-style"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"table",
+				"table-column"
+			],
+			[
+				"font-",
+				"font-family"
+			],
+			[
+				"background",
+				"background-color"
+			],
+			[
+				"backg",
+				"background-size"
+			],
+			[
+				"bot",
+				"border-top"
+			],
+			[
+				"alig",
+				"vertical-align"
+			],
+			[
+				"bag",
+				"bagtype"
+			],
+			[
+				"GetWeam",
+				"GetWeaponFromAmmoModel"
+			],
+			[
+				"Get",
+				"GetEquipableModelType"
+			],
+			[
+				"GetObjec",
+				"GetObjectColor"
+			],
+			[
+				"Player",
+				"PlayerRegisterName"
+			],
+			[
+				"PlayerInfo",
+				"PlayerLoginInfo"
+			],
+			[
+				"PlayerTextDraw",
+				"PlayerTextDrawSetString"
+			],
+			[
+				"FIELD_",
+				"FIELD_REGISTER_MAIL"
+			],
+			[
+				"DIALOG_REGISTER_",
+				"DIALOG_REGISTER_REPASSWORD"
+			],
+			[
+				"RegisterS",
+				"RegisterScreenText"
+			],
+			[
+				"DIALOG_LOGIN_",
+				"DIALOG_LOGIN_PASSWORD"
+			],
+			[
+				"Map",
+				"MapAndreas_FindZ_For2DCoord"
+			],
+			[
+				"IsPlayer",
+				"IsPlayerNPC"
+			],
+			[
+				"Ma",
+				"mapAndreas"
+			],
+			[
+				"IsPla",
+				"IsPlayerConnected"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "/*\n	>> Hooks module <<\n*/\npublic OnGameModeInit()\n{\n	AC_OnGameModeInit();\n	#if defined Hooked_OnGameModeInit\n	Hooked_OnGameModeInit();\n	#endif\n	//code\n	return 1;\n}\n#if defined _ALS_OnGameModeInit\n	#undef OnGameModeInit\n#else\n	#define _ALS_OnGameModeInit\n#endif\n#define OnGameModeInit Hooked_OnGameModeInit\n#if defined Hooked_OnGameModeInit\n	forward Hooked_OnGameModeInit();\n#endif\n\npublic OnPlayerConnect(playerid)\n{\n	AC_OnPlayerConnect(playerid);\n	#if defined Hooked_OnPlayerConnect\n	Hooked_OnPlayerConnect(playerid);\n	#endif\n	//code\n	return 1;\n}\n#if defined _ALS_OnPlayerConnect\n	#undef OnPlayerConnect\n#else\n	#define _ALS_OnPlayerConnect\n#endif\n#define OnPlayerConnect Hooked_OnPlayerConnect\n#if defined Hooked_OnPlayerConnect\n	forward Hooked_OnPlayerConnect(playerid);\n#endif\n\n\n",
+			"file": "/C/Users/Leonardo/Desktop/iAntiCheater/modules/hooks.inc",
+			"file_size": 818,
+			"file_write_time": 130815686476441631,
+			"settings":
+			{
+				"buffer_size": 782,
+				"line_ending": "Windows",
+				"name": "/*"
+			}
+		},
+		{
+			"file": "/C/Users/Leonardo/Documents/GitHub/zombotech/gamemodes/zombo.pwn",
+			"settings":
+			{
+				"buffer_size": 803,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Leonardo/Documents/GitHub/zombotech/modules/npcs/zombies_functions.inc",
+			"settings":
+			{
+				"buffer_size": 826,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/User/pawno.sublime-build",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+	],
+	"find":
+	{
+		"height": 37.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"|",
+			"sscanf",
+			"CreateDynamicObjec",
+			"loadinventorypageitems",
+			"giveplayeritem",
+			"oncreateplayeritem",
+			"#header-logo > #header-text h1{\n\n}",
+			" \n",
+			"Encomenda",
+			"Produto",
+			"margin-right:15px;",
+			"item2",
+			"div",
+			"col-2",
+			"col-3",
+			"col-2",
+			"	\n",
+			"{358,			\"Sniper Rifle\",			0.1,					  0.0,					0.0,					70.0,			  	  0.0,			0.0,				0.0,			(0x663333),			(0xFFFFFF),			0.0,		0.0,		-55.0,		2.4,			\"\", 				 \"\",						\"You found a Sniper Rifle!~n~Are you a camper asshole? Campers must die!\"}\n	",
+			"setplayerequip",
+			"equippeditem",
+			"onplayerequipitem",
+			"PlayerItem",
+			"onplayere",
+			"SetPlayerCameraToSpawn(playerid)",
+			"SetPlayerCameraToSpawn(playerid);",
+			"onplayeru",
+			"onplayerunequipitem",
+			"loadinventoryequippeditems",
+			"Set",
+			"equip",
+			"giveplayeritem",
+			"0xFF",
+			"createdroppeditem",
+			"<<",
+			"removeplayeritem",
+			"\"drop\"",
+			"cmd:",
+			"time = ",
+			"setaccountmutedtime",
+			"loadplayermutedtime",
+			">\n",
+			"sCORENPING",
+			"ProcessGameTime",
+			"LoadPlayerMutedTime(playerid)",
+			"OnPlayerRequest",
+			"DaysToSeconds",
+			"padlock",
+			"ProcessGameTime",
+			"LoadPlayerBagInfo",
+			"230",
+			"OnPlayerSPAWN",
+			"onplayerspawn",
+			"LoadPlayersClasses()",
+			"scoreandping",
+			"Textdraw5z",
+			"Textdraw5z[playerid]",
+			"Textdraw5z",
+			"MissionText",
+			"static",
+			"StartScreenStatic",
+			"Static",
+			"loadplayeritems",
+			"RegisterScreenText",
+			"LoginScreenStatic[22]",
+			"LoginScreenStatic[21]",
+			"LoginScreenStatic[12]",
+			"\\\n",
+			"public OnPLAYERcLICKText",
+			"onplayerconnected",
+			"if(playertextid == InventoryText[playerid][31]) return;",
+			"cmd:",
+			"sqlite_LoadMapObjects",
+			"adddynamicobject",
+			"E_STREAMER_DRAW_DISTANCE",
+			"AddDynamicObject",
+			"/cobject",
+			"/",
+			"cobject",
+			"allo",
+			"skin",
+			"\"skin\"",
+			"cmd:skin",
+			"arrayobject",
+			"loadmaps",
+			"/bibliotecas/",
+			"npc.MOVEtO",
+			"updatezombies",
+			"InventoryText[",
+			"onplayerspawn",
+			"isplayerininventory"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			", ",
+			"RegisterScreenText[playerid]",
+			"RegisterScreenStatic[25]",
+			"RegisterScreenStatic[24]",
+			"RegisterScreenStatic[23]",
+			"/modules/",
+			"InventoryText[playerid]["
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/C/Users/Leonardo/Desktop/iAntiCheater/modules/hooks.inc",
+					"settings":
+					{
+						"buffer_size": 782,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								782,
+								782
+							]
+						],
+						"settings":
+						{
+							"auto_name": "/*",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Users/Leonardo/Documents/GitHub/zombotech/gamemodes/zombo.pwn",
+					"settings":
+					{
+						"buffer_size": 803,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								151,
+								151
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/Leonardo/Documents/GitHub/zombotech/modules/npcs/zombies_functions.inc",
+					"settings":
+					{
+						"buffer_size": 826,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								823,
+								823
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 30.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 230.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"tsm",
+				"Zumbis/filterscripts/tstudio/modelsizes.pwn"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 108.0,
+	"status_bar_visible": true
+}
