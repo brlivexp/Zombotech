@@ -270,6 +270,8 @@ public OnCommandCalled(playerid, params[])
 		
 		return 1;
 	}
+	get_cmd_params(startcraft) return ShowPlayerCraftingMenu(playerid);
+	get_cmd_params(stopcraft) return HidePlayerCraftingMenu(playerid);
 	return 1;
 }
 

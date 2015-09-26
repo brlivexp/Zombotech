@@ -455,8 +455,18 @@ Fixado:
 
 -------------------------------------------------------------------------------------------------------:
 
+(Quinta-feira): 24/09/2015
+
+Fixado:
+
+-Bug no qual era preciso re-equipar as armas ao morrer
+
+Adcionado:
+
+-Sons aos botões do inventário
+
+
 (A fazer):
--Adcionar sons e animações no inventário
+
 -Modificar HUD (health bar, loot crosshair)
 -Tornar o loot mais preciso (mira)
--Fixar bug de perder armas ao morrer
