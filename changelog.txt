@@ -477,7 +477,7 @@ Adcionado:
 (Domingo): 27/09/2015
 
 Adcionado:
--Carregamento de skin ao conectar
+-Carregamento de skin ao conectar (incompleto)
 -Criada estrutura do catálogo de itens de crafting
 
 -------------------------------------------------------------------------------------------------------:
@@ -490,8 +490,12 @@ Adcionado:
 Alterado:
 -Alguns objetos ainda não possuiam Descrição
 
+Removido:
+-Todos os códigos e arquivos inúteis ao projeto foram removidos
+
 Fixado:
 -Query no salvamento de backpacks que poderia causar desincronização ao entrar ao jogo
+-A câmera era levada ao lugar incorreto no spawn
 
 -------------------------------------------------------------------------------------------------------:
 
