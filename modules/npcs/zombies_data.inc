@@ -9,6 +9,8 @@
 #define MAX_ATTACHMENTS 100
 #define MAX_ZOMBIE_CLASS  4
 
+#define rvelocity (float(MRandom(40)) * 0.0001)
+
 enum ZombiesData
 {
 	zombie_class,

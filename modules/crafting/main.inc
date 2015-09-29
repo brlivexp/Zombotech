@@ -1,13 +1,5 @@
 #include "../modules/crafting/craftingdata.inc"
 
-enum CraftingData
-{
-	bool:is_crafting,
-	crafting_timer,
-	crafting_item_model,
-	crafting_item_amount
-};
-new PlayerCraftingInfo[MAX_PLAYERS][CraftingData];
 
 stock ResetPlayerCraftingData(playerid)
 {
@@ -22,6 +14,7 @@ stock SetCraftingDefaultConfigs(playerid)
 
 ShowPlayerCraftingMenu(playerid)
 {
+	HidePlayerHUD(playerid);
 	SetCraftingDefaultConfigs(playerid);
 	for(new i; i < 23; i++) TextDrawShowForPlayer(playerid, CraftingStatic[i]);
 	for(new j; j < 40; j++) PlayerTextDrawShow(playerid, CraftingText[playerid][j]);
@@ -30,6 +23,7 @@ ShowPlayerCraftingMenu(playerid)
 
 HidePlayerCraftingMenu(playerid)
 {
+	ShowPlayerHUD(playerid);
 	for(new i; i < 23; i++) TextDrawHideForPlayer(playerid, CraftingStatic[i]);
 	for(new j; j < 40; j++) PlayerTextDrawHide(playerid, CraftingText[playerid][j]);
 	return 1;

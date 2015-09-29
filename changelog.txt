@@ -458,15 +458,43 @@ Fixado:
 (Quinta-feira): 24/09/2015
 
 Fixado:
-
 -Bug no qual era preciso re-equipar as armas ao morrer
 
 Adcionado:
-
 -Sons aos botões do inventário
 
+-------------------------------------------------------------------------------------------------------:
+
+(Sábado): 26/09/2015
+
+Adcionado:
+-Importado design do sistema de crafting
+-Sistema de crafting iniciado
+-Comandos para testes de display do menu de crafting
+
+-------------------------------------------------------------------------------------------------------:
+
+(Domingo): 27/09/2015
+
+Adcionado:
+-Carregamento de skin ao conectar
+-Criada estrutura do catálogo de itens de crafting
+
+-------------------------------------------------------------------------------------------------------:
+
+(Segunda-feira): 28/09/2015
+
+Adcionado:
+-Alguns updates no sistema de crafting
+
+Alterado:
+-Alguns objetos ainda não possuiam Descrição
+
+Fixado:
+-Query no salvamento de backpacks que poderia causar desincronização ao entrar ao jogo
+
+-------------------------------------------------------------------------------------------------------:
 
 (A fazer):
-
 -Modificar HUD (health bar, loot crosshair)
 -Tornar o loot mais preciso (mira)

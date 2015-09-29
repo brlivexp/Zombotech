@@ -1,16 +1,3 @@
-/**
-*
-* Macro para declarar stock e publics
-*
-**/
-
-#define fp%0(%1)								forward %0(%1); public %0(%1)
-
-#define fs%0(%1)								stock %0(%1)
-
-
-
-
 
 /**
 *
@@ -52,14 +39,6 @@
 *
 **/
 
-fp StoreVectorPath(npcid, Float:x, Float:y, Float:z) {
-
-    vector_push_back_float(npcid, x);
-    vector_push_back_float(npcid, y);
-    vector_push_back_float(npcid, z);
-
-    return true;
-}
 
 
 forward Float:GetDistanceBetweenPoints(Float:X, Float:Y, Float:Z, Float: PointX, Float: PointY, Float: PointZ);
@@ -72,18 +51,7 @@ stock Float:GetDistanceBetweenPoints(Float:X, Float:Y, Float:Z, Float: PointX, F
 *
 **/
 
-fp GetVectorPath(npcid, vectorid, &Float:x, &Float:y, &Float:z) {
 
-	
-	vectorid *= 3;
-
-	if(vector_size(npcid) > vectorid) {
-    
-		x = vector_get_float(npcid, vectorid);
-		y = vector_get_float(npcid, vectorid+1);
-		z = vector_get_float(npcid, vectorid+2);
-	}
-}
 
 
 /**

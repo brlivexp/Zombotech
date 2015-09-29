@@ -237,14 +237,14 @@ SetPlayerBagType(playerid, type, itemid, model, Float:durability, time, expirabl
 	
 	new query[512];
 
+	mysql_format(MySQL, query, 128, "UPDATE `users` SET `bagtype` = '%d' WHERE `id` = %d", type, PlayerInfo[playerid][pid]);
+	mysql_tquery(MySQL, query, "", "");
+
 	switch(type)
 	{
 		case 1:
 		{
 			mysql_format(MySQL, query, 128, "DELETE FROM `equiped_items` WHERE `slotid` = 8 AND `playerid` = %d", PlayerInfo[playerid][pid]);
-			mysql_tquery(MySQL, query, "", "");
-
-			mysql_format(MySQL, query, 128, "UPDATE `items` SET `bagtype` = 1 WHERE `id` = %d", PlayerInfo[playerid][pid]);
 			mysql_tquery(MySQL, query, "", "");
 
 			RemovePlayerEquippedItem(playerid, 8);
@@ -296,6 +296,7 @@ SetPlayerBagType(playerid, type, itemid, model, Float:durability, time, expirabl
 				PlayerEquippedItem[playerid][EItemCol1][8],
 				PlayerEquippedItem[playerid][EItemCol2][8]);
 				mysql_tquery(MySQL, query, "","");
+
 				return SetPlayerAttachedObject(playerid, 8, 3026, 1, -0.168829, -0.077197, 0.000000, 0.000000, 0.000000, 0.000000, 1.100000, 1.100000, 1.100000);
 			}
 			else 
@@ -1412,7 +1413,7 @@ SavePlayerItems(playerid)
 	return 1;
 }
 
-LoadDroppedItems()
+stock LoadDroppedItems()
 {
 	new query[64];
 	mysql_format(MySQL, query, sizeof(query), "SELECT * FROM `items` WHERE `owner` = -1");

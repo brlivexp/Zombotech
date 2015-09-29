@@ -29,23 +29,4 @@ MySQLCloseConnection()
 	return 1;
 }
 
-stock GetPlayerNameEx(playerid)
-{
-	new name[24];
-	GetPlayerName(playerid, name, 24);
-	return name;
-}
 
-ResetPlayerAttachments(playerid)
-{
-	for(new i; i < MAX_PLAYER_ATTACHED_OBJECTS; i++)
-    {
-        if(IsPlayerAttachedObjectSlotUsed(playerid, i)) RemovePlayerAttachedObject(playerid, i);
-    }
-    return 1;
-}
-
-#define DaysToSeconds(%0)	(%0 * 86400)
-
-GetPlayerCameraObject(playerid)
-	return Streamer_GetItemStreamerID(playerid, STREAMER_TYPE_OBJECT, GetPlayerCameraTargetObject(playerid));
