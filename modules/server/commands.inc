@@ -272,6 +272,13 @@ public OnCommandCalled(playerid, params[])
 	}
 	get_cmd_params(startcraft) return ShowPlayerCraftingMenu(playerid);
 	get_cmd_params(stopcraft) return HidePlayerCraftingMenu(playerid);
+	get_cmd_params(pps)
+	{
+		new sound;
+		if(sscanf(params, "i", sound)) return SendClientMessage(playerid, 0xFF0000FF, "Invalid sound id");
+		SendClientMessage(playerid, 0x00FF00FF, "Playing desired sound id");
+		return PlayerPlaySound(playerid, sound, 0.0, 0.0, 0.0);
+	}
 	return 1;
 }
 
