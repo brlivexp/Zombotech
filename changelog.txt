@@ -17,7 +17,7 @@ Removido:
 
 Alterado:
 -N/A
-
+''
 Fixado:
 -Chaves do main() que faziam a callback OnGameModeInit ser chamada mais de uma vez
 -Conexão de NPCS mal sucedidas por falta de arquivos
@@ -499,6 +499,14 @@ Fixado:
 
 -------------------------------------------------------------------------------------------------------:
 
+(Terça-feira): 29/09/2015
+
+Adcionado:
+-Nova estrutura do zombies data
+-Filterscript hold studio importado para criação de attachments dos zumbis
+-Pequenas modificações na estrutura dos loots (adcionados spots do scavenge & survive) - ainda não terminado.
+
+-------------------------------------------------------------------------------------------------------:
 (A fazer):
 -Modificar HUD (health bar, loot crosshair)
 -Tornar o loot mais preciso (mira)

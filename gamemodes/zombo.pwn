@@ -45,7 +45,6 @@ new szStrsPrintf[1024];
 #include "../modules/paths/vectorangles.inc"
 #include "../modules/server/isscanf.inc"
 #include "../modules/paths/n_vectors.inc"
-//end of//
 #include "../modules/paths/nodes.inc"
 #include "../modules/server/time.inc"
 #include "../modules/server/configs.inc"
@@ -61,7 +60,8 @@ new szStrsPrintf[1024];
 #include "../modules/maps/maps.inc"
 #include "../modules/menu/main.inc"
 #include "../modules/player/class.inc"
-
+#include "../modules/actors/bodies.inc"
+#include "../modules/player/anims.inc"//preload
 /*********************************************************************************************************/
 /*                                       SERVER CALLBACKS                                                */
 /*********************************************************************************************************/
@@ -107,6 +107,11 @@ public OnGameModeInit()
 	blackmap = GangZoneCreate(-3500.0,-3500.0,3500.0,3500.0);
 	
 	print("-------------------------------------");
+	print("Generating dead bodies...");
+	print("-------------------------------------");
+	SetupRandomDeadBodies();
+
+	print("-------------------------------------");
 	print("Generating dropped objects...");
 	print("-------------------------------------");
 	ResetDroppedObjects();
@@ -147,6 +152,7 @@ public OnGameModeInit()
 	print("Loading Server-Textdraws...");
 	print("-------------------------------------");
 	LoadServerTextDraws();
+
 	return true;
 }
 
@@ -160,7 +166,7 @@ public OnPlayerConnect(playerid)
 {	
 	if(!IsPlayerNPC(playerid))
 	{
-		
+		PreloadAnimations(playerid);
 		PlayerLoginInfo[playerid][FirstSpawn] = true;
    		ResetInventoryInfo(playerid);
    		ResetAllowanceInfo(playerid);

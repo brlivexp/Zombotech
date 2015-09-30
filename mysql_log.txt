@@ -1,0 +1,2 @@
+[16:01:28] [ERROR] CMySQLResult::GetRowDataByName() - invalid row index ('0')
+[16:01:28] [ERROR] cache_get_field_content_int - invalid datatype

@@ -1,4 +1,4 @@
-#define MAX_DROPPED_ITEMS 6000
+#define MAX_DROPPED_ITEMS sizeof(SpotNodes)
 
 new RandomAcessObjects[MAX_DROPPED_ITEMS];
 new AcessID[MAX_DROPPED_ITEMS];
@@ -61,41 +61,15 @@ stock RegenerateLoots()
 	cache_delete(result);
 	print("Creating loots...");
 
+	
+					
 	for(new o; o < MAX_DROPPED_ITEMS; o++)
 	{
-		new sort = random(2);
-		new index = random(sort ? sizeof RoadNodes : sizeof PedNodes);
-
-		
-
 		new tmpModel = random(sizeof RandomAcessObjects),
-		Float:tmpPosX,
-		Float:tmpPosY,
-		Float:tmpPosZ;
-
-		if(sort)
-		{
-			new Float:Variance[2];
-			MRandFloatRange(-8.0, 8.0, Variance[0]);//random X variance
-			MRandFloatRange(-8.0, 8.0, Variance[1]);//random Y variance
-
-			tmpPosX = RoadNodes[index][nodeX] + Variance[0];
-			tmpPosY = RoadNodes[index][nodeY] + Variance[1];
-			CA_FindZ_For2DCoord(tmpPosX, tmpPosY, tmpPosZ);
-			tmpPosZ += 0.1;
-		}
-		else
-		{
-			new Float:Variance[2];
-			MRandFloatRange(-6.0, 6.0, Variance[0]);//random X variance
-			MRandFloatRange(-6.0, 6.0, Variance[1]);//random Y variance
-
-			tmpPosX = PedNodes[index][PNodeX] + Variance[0];
-			tmpPosY = PedNodes[index][PNodeY] + Variance[1];
-			CA_FindZ_For2DCoord(tmpPosX, tmpPosY, tmpPosZ);
-			tmpPosZ += 0.1;
-		}
-
+		Float:tmpPosX = SpotNodes[o][SNodeX],
+		Float:tmpPosY = SpotNodes[o][SNodeY],
+		Float:tmpPosZ = SpotNodes[o][SNodeZ];
+			
 		if(AcessID[o])
 		{
 			new query[256];
