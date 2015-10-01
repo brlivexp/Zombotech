@@ -834,12 +834,12 @@ CreatePlayerItem(playerid, model, amount, Float:durability = 100.0, itemtime = 0
 	return 1;
 }
 
-CreateDroppedItem(itemid, model, amount, Float:x, Float:y, Float:z, vworld, pinterior, Float:durability = 100.0, itemtime = 0, expirable = 0)
+CreateDroppedItem(itemid, model, amount, Float:x, Float:y, Float:z, vworld, pinterior, Float:durability = 100.0, itemtime = 0, expirable = 0, bool:use_z_index = false)
 {	
 	new label[50], Float:rx, Float:ry, Float:rz, label_color, Float:label_variance;
 	label_color = GetObjectColor(model);
 	GetObjectDropData(model, rx, ry, rz, label_variance);
-	CA_FindZ_For2DCoord(x, y, z);
+	if(!use_z_index) CA_FindZ_For2DCoord(x, y, z);
 	format(label, sizeof(label), "Item: {%06x}%s", label_color, GetObjectName(model));
 	DroppedItem[itemid][DItemLabel] = CreateDynamic3DTextLabel(label, 0xFFFFFFFF, x, y, z + 0.3 + label_variance, 12.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, vworld, pinterior);
 	DroppedItem[itemid][DItemModel] = model;

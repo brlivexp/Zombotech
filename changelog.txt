@@ -507,6 +507,17 @@ Adcionado:
 -Pequenas modificações na estrutura dos loots (adcionados spots do scavenge & survive) - ainda não terminado.
 
 -------------------------------------------------------------------------------------------------------:
+
+(Quarta-feira): 30/09/2015
+
+Adcionado:
+-Pre-load de anims para players e actors
+-Corpos ao redor de San Andreas (actors)
+
+Alterado:
+-Novo método de geração de loot (muito mais organizado)
+
+
 (A fazer):
 -Modificar HUD (health bar, loot crosshair)
 -Tornar o loot mais preciso (mira)

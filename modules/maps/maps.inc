@@ -8,7 +8,6 @@ RemoveMaps(playerid)
 
 LoadMaps()
 {
-	
 	//Objects//
 	new tmpobjid;
 	tmpobjid = CreateDynamicObject(3612,-562.914,2619.254,53.418,0.000,-180.000,-92.399,-1,-1,-1,300.000,300.000);

@@ -75,7 +75,7 @@ stock RegenerateLoots()
 			new query[256];
 			mysql_format(MySQL, query, 256, "UPDATE `items` SET `model` = '%d', `coord_x` = '%f', `coord_y` = '%f', `coord_z` = '%f', `interior` = '0', `world`= '0', `durability` = '100.0', `time` = '0', `expirable` = '0' WHERE `id` = '%d';", RandomAcessObjects[tmpModel], tmpPosX, tmpPosY, tmpPosZ, AcessID[o]);
 			mysql_tquery(MySQL, query, "", "");
-			CreateDroppedItem(AcessID[o], RandomAcessObjects[tmpModel], 1, tmpPosX, tmpPosY, tmpPosZ, 0, 0, 100.0, 0, 0);
+			CreateDroppedItem(AcessID[o], RandomAcessObjects[tmpModel], 1, tmpPosX, tmpPosY, tmpPosZ, 0, 0, 100.0, 0, 0, true);
 			//printf("recreated item %d with model %d", AcessID[o], RandomAcessObjects[tmpModel]);
 		}
 		else
@@ -93,7 +93,7 @@ stock RegenerateLoots()
 
 			mysql_format(MySQL, query, 256, "INSERT INTO `items` VALUES ('%d', '%d', '1', '-1', '%f', '%f', '%f', '0', '0', '100', '0', '0');", lastitemid, RandomAcessObjects[tmpModel], tmpPosX, tmpPosY, tmpPosZ);
 			mysql_tquery(MySQL, query, "", "");
-			CreateDroppedItem(lastitemid, RandomAcessObjects[tmpModel], 1, tmpPosX, tmpPosY, tmpPosZ, 0, 0, 100.0, 0, 0);
+			CreateDroppedItem(lastitemid, RandomAcessObjects[tmpModel], 1, tmpPosX, tmpPosY, tmpPosZ, 0, 0, 100.0, 0, 0, true);
 			//printf("created item %d with model %d", lastitemid, RandomAcessObjects[tmpModel]);
 		}
 		
