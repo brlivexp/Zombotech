@@ -39,6 +39,8 @@ new szStrsPrintf[1024];
 /*                                       SERVER INCLUDES                                                 */
 /*********************************************************************************************************/
 //updated//
+
+
 #include "../modules/server/utils.inc"
 #include "../modules/sqlite/utils.inc"
 #include "../modules/player/spawns.inc"
@@ -56,12 +58,13 @@ new szStrsPrintf[1024];
 #include "../modules/player/infobox.inc"
 #include "../modules/inventory/main.inc"
 #include "../modules/crafting/main.inc"
-#include "../modules/server/commands.inc"
 #include "../modules/maps/maps.inc"
 #include "../modules/menu/main.inc"
 #include "../modules/player/class.inc"
 #include "../modules/actors/bodies.inc"
 #include "../modules/player/anims.inc"//preload
+#include "../modules/npcs/zombiesdata.inc"
+#include "../modules/server/commands.inc"
 /*********************************************************************************************************/
 /*                                       SERVER CALLBACKS                                                */
 /*********************************************************************************************************/
@@ -124,6 +127,7 @@ public OnGameModeInit()
 	print("-------------------------------------");
 	print("Loading zombies...");
 	print("-------------------------------------");
+	LoadZombieSkins();
 	//ConnectAllZombies();
     
     print("-------------------------------------");
@@ -313,29 +317,10 @@ public OnPlayerSpawn(playerid)
     }
 	SetTimerEx("ActiveSpawn", 500, false,  "d", playerid);
 	
-	ApplyAnimation(playerid,	"KNIFE", 		"null", 0.0,0,0,0,0,0,0);
-	ApplyAnimation(playerid,	"PED", 			"null", 0.0,0,0,0,0,0,0);
-	ApplyAnimation(playerid,	"RIOT", 		"null", 0.0,0,0,0,0,0,0);
-	ApplyAnimation(playerid,	"CARRY", 		"null", 0.0,0,0,0,0,0,0);
-	ApplyAnimation(playerid, 	"ON_LOOKERS", 	"null", 0.0,0,0,0,0,0,0);
-	ApplyAnimation(playerid, 	"BD_FIRE", 		"null", 0.0,0,0,0,0,0,0);
-	
 	if(IsPlayerNPC(playerid)) 
 	{
-	    SetPVarInt(playerid, "SpawnLiberado", 1);
-	    
-	    SetPlayerAttachedObject( playerid, 0, 3003, 2, 0.085594, 0.082489, 0.028680, 0.000000, 0.000000, 0.000000, 0.613528, 0.576035, 0.475660, 0xFFCC9900, 0xFFCC9900 ); // k_poolballcue - olho esquerdo
-		SetPlayerAttachedObject( playerid, 1, 3003, 2, 0.082179, 0.079389, -0.033194, 345.747283, 63.987533, 0.000000, 0.613528, 0.576035, 0.475660, 0xFFCC9900, 0xFFCC9900); // k_poolballcue - olho direito
-		SetPlayerAttachedObject( playerid, 2, 2804, 1, 0.099359, 0.138227, -0.014541, 256.316284, 7.421461, 296.197753, 0.669468, 0.600000, 0.579540, 0xFF700000, 0xFF700000 ); // CJ_MEAT_1 - peito direito
-		SetPlayerAttachedObject( playerid, 3, 2804, 1, 0.086654, 0.138227, 0.008487, 97.806625, 359.692108, 296.197753, 0.669468, 0.600000, 0.579540, 0xFF700000, 0xFF700000); // CJ_MEAT_1 - peito esquerdo
-		SetPlayerAttachedObject( playerid, 4, 2806, 1, 0.000000, 0.152520, 0.000000, 263.708404, 0.000000, 287.533843, 0.344415, 0.200000, 0.393224, 0xFF700000, 0xFF700000 ); // CJ_MEAT_2 - estomago
-		SetPlayerAttachedObject( playerid, 5, 2806, 3, 0.086628, 0.020558, 0.030311, 148.828826, 0.000000, 286.031402, 0.229553, 0.200000, 0.306282, 0xFF700000, 0xFF700000 ); // CJ_MEAT_2 - ombro esquerdo
-		SetPlayerAttachedObject( playerid, 6, 2806, 4, 0.155685, 0.011566, -0.042313, 132.740859, 96.022956, 211.319015, -0.098667, 0.091859, -0.909853, 0xFF700000, 0xFF700000 ); // CJ_MEAT_2 - ombro direito
-		SetPlayerAttachedObject( playerid, 7, 2806, 2, 0.018751, 0.052789, -0.053213, 16.325899, 12.536803, 272.266479, -0.125444, 0.100000, -0.127154, 0xFF700000, 0xFF700000 ); // CJ_MEAT_2 - bochecha direita
-		SetPlayerAttachedObject( playerid, 8, 2806, 2, 0.033698, 0.043727, 0.0, 354.842315, 354.532623, 285.991363, -0.125444, 0.100000, -0.127154, 0xFF700000, 0xFF700000 ); // CJ_MEAT_2 - bochecha esq
-		SetPlayerAttachedObject( playerid, 9, 2804, 1, 0.05, -0.02, 0.00, 87.0, -19.0, -63.0, 0.62, 0.68, 0.62, 0xFF700000, 0xFF700000);
+	    SetPVarInt(playerid, "SpawnLiberado", 1); 	   
         SetPlayerPos(playerid, proxSpawn[playerid][0],proxSpawn[playerid][1],proxSpawn[playerid][2]+1.0);
-        SetPlayerSkin(playerid, 162);
 		return true;
 	}
 	return true;

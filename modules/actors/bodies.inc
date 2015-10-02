@@ -2,6 +2,8 @@
 #define MAX_RANDOM_BODIES 600
 #define MAX_PLAYER_BODIES 400
 
+#define INVALID_DEAD_BODY -1
+
 enum DeadBodyData
 {
 	deadbodyid,

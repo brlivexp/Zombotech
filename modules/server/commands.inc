@@ -1,5 +1,6 @@
 #include "../modules/admin/permissions.inc"
 
+
 #define DIALOG_SPAWN_ITEMS	9892
 #define DIALOG_SPAWN_ITEMS_AMOUNT	9893
 #define DIALOG_ADMIN_MENU 	3346
@@ -270,14 +271,43 @@ public OnCommandCalled(playerid, params[])
 		
 		return 1;
 	}
-	get_cmd_params(startcraft) return ShowPlayerCraftingMenu(playerid);
-	get_cmd_params(stopcraft) return HidePlayerCraftingMenu(playerid);
-	get_cmd_params(pps)
+	get_cmd_params(startcraft)
+	{
+		return ShowPlayerCraftingMenu(playerid);	
+	} 
+	get_cmd_params(stopcraft)
+	{
+		return HidePlayerCraftingMenu(playerid);
+	} 
+	get_cmd_params(playsound)
 	{
 		new sound;
 		if(sscanf(params, "i", sound)) return SendClientMessage(playerid, 0xFF0000FF, "Invalid sound id");
 		SendClientMessage(playerid, 0x00FF00FF, "Playing desired sound id");
 		return PlayerPlaySound(playerid, sound, 0.0, 0.0, 0.0);
+	}
+	get_cmd_params(zmode)
+	{
+		new skinid;
+		if(sscanf(params, "d", skinid)) return SendClientMessage(playerid, 0xFF0000FF, "Correct usage: /zmode <skinid>");
+		if(!AttachmentSkinInfo[skinid][0][AttachmentModel]) return SendClientMessage(playerid, 0xFF0000FF, "This skin hasn't bene modified yet");
+ 		SetPlayerSkin(playerid, skinid);
+		for(new i; i < 10; i++)
+			SetPlayerAttachedObject(playerid, i, 
+			AttachmentSkinInfo[skinid][i][AttachmentModel],
+			AttachmentSkinInfo[skinid][i][AttachmentBone],
+			AttachmentSkinInfo[skinid][i][AttachmentPosX],
+			AttachmentSkinInfo[skinid][i][AttachmentPosY],
+			AttachmentSkinInfo[skinid][i][AttachmentPosZ],
+			AttachmentSkinInfo[skinid][i][AttachmentRotX],
+			AttachmentSkinInfo[skinid][i][AttachmentRotY],
+			AttachmentSkinInfo[skinid][i][AttachmentRotZ],
+			AttachmentSkinInfo[skinid][i][AttachmentSizeX],
+			AttachmentSkinInfo[skinid][i][AttachmentSizeY],
+			AttachmentSkinInfo[skinid][i][AttachmentSizeZ],
+			0xFF << 24 | AttachmentSkinInfo[skinid][i][AttachmentColor1],
+			0xFF << 24 | AttachmentSkinInfo[skinid][i][AttachmentColor2]);
+		return 1;
 	}
 	return 1;
 }

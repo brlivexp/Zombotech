@@ -4,7 +4,7 @@
 #define LOOT_POLICE 3
 #define LOOT_MILITARY 4
 #define LOOT_MEDICAL 5
-
+/*
 enum NodeInfo
 {
 	Float:NodeX,
@@ -19,7 +19,7 @@ enum NodeInfo
 	link4ID,
 	navi4ID,
 	bool:RoadNode_Taken
-};
+};*/
 
 enum PedNodeInfo
 {
@@ -37,7 +37,7 @@ enum SpotNodeInfo
 	Spawn_Type,
 	bool:SpotNode_Taken
 }
-
+/*
 new RoadNodes[][NodeInfo] = {
 {-2427.63,-2474.75,35.75,106,0,6,1,-1,-1,-1,-1, false},
 {-2350.25,-2575.63,44.75,37,2,2,3,-1,-1,-1,-1, false},
@@ -27122,7 +27122,7 @@ new RoadNodes[][NodeInfo] = {
 {2499.63,2513.00,9.75,27079,27884,27081,27885,-1,-1,-1,-1, false},
 {2491.13,2513.13,9.75,27080,27885,27082,-1,-1,-1,-1,-1, false},
 {2484.13,2513.25,9.75,-1,-1,-1,-1,-1,-1,-1,-1}
-};
+};*/
 
 new PedNodes[][PedNodeInfo] = {
 {-2134.250000, -2430.000000, 29.500000, false},
