@@ -39,7 +39,7 @@ LoadSpawnsPos(filename[]) {
 
 	fclose(file_ptr);
 
-	printf("Foram carregados %d spawns", Carregando);
+	printf("Server loaded %d spawns", Carregando);
 	return true;
 }
 

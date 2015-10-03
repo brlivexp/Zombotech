@@ -1,26 +1,60 @@
+#include "../modules/npcs/zombiesdata.inc"
 
-fs CreateZombie()
+fs GenerateZombies()
 {
-	//get a id for the zombies array
-	new zombieid = GetPlayerPoolSize() ? GetPlayerPoolSize() + 1 : GetPlayerPoolSize();
-	//get a random skin from the list
-	new skinid = ZombieSkins[MRand(sizeof ZombieSkins)];
-	//setup skin data for the zombie
-	ZombiesInfo[zombieid][zombie_skin] = skinid;
-	ZombiesInfo[zombieid][zombie_type] = ZombieClassInfo[skinid][ZombieTypeID];
-	ZombiesInfo[zombieid][zombie_health] = ZombieClassInfo[skinid][DefaultHealth];
-	ZombiesInfo[zombieid][zombie_armour] = ZombieClassInfo[skinid][DefaultArmour];
-	ZombiesInfo[zombieid][zombie_armour] = ZombieClassInfo[skinid][DefaultArmour];
-	ZombiesInfo[zombieid][zombie_status] = ZOMBIE_STATUS_STOPPED;
-	ZombieInfo[zombieid][zombie_target_body] = INVALID_DEAD_BODY;
-	//connect NPC
-	new strname[24];
-	format(strname, "Zombie[%d]");
-	ZombiesInfo[zombieid][zombie_npcid] = ConnectRNPC(strname);
+	for(new i; i < MAX_ZOMBIES; i++)
+		SetTimer("CreateZombie", 150 + (i * 2), false);
+
+	return print("Generating zombies...");
+}
+
+fp CreateZombie()
+{
+	ConnectRNPC("Zombie");
 	return 1;
 }
 
-fp OnZombieUpdate(npcid)
+fs OnZombieConnect(playerid)
+{
+	new skinid = ZombieSkins[MRandom(sizeof ZombieSkins)];
+	//setup skin data for the zombie
+	ZombieInfo[playerid][zombie_skin] = skinid;
+	ZombieInfo[playerid][zombie_type] = ZombieClassInfo[skinid][ZombieTypeID];
+	ZombieInfo[playerid][zombie_health] = ZombieClassInfo[skinid][DefaultHealth];
+	ZombieInfo[playerid][zombie_armour] = ZombieClassInfo[skinid][DefaultArmour];
+	ZombieInfo[playerid][zombie_status] = ZOMBIE_STATUS_STOPPED;
+	ZombieInfo[playerid][zombie_target_body] = INVALID_DEAD_BODY;
+	return 1;
+}
+
+OnZombieSpawn(playerid)
+{
+	new skinid = ZombieInfo[playerid][zombie_skin];
+	SetPlayerHealth(playerid, ZombieInfo[playerid][zombie_health]);
+	SetPlayerArmour(playerid, ZombieInfo[playerid][zombie_armour]);
+	SetPlayerSkin(playerid, skinid);
+
+	for(new i; i < 10; i++)
+		SetPlayerAttachedObject(playerid, i, 
+		AttachmentSkinInfo[skinid][i][AttachmentModel],
+		AttachmentSkinInfo[skinid][i][AttachmentBone],
+		AttachmentSkinInfo[skinid][i][AttachmentPosX],
+		AttachmentSkinInfo[skinid][i][AttachmentPosY],
+		AttachmentSkinInfo[skinid][i][AttachmentPosZ],
+		AttachmentSkinInfo[skinid][i][AttachmentRotX],
+		AttachmentSkinInfo[skinid][i][AttachmentRotY],
+		AttachmentSkinInfo[skinid][i][AttachmentRotZ],
+		AttachmentSkinInfo[skinid][i][AttachmentSizeX],
+		AttachmentSkinInfo[skinid][i][AttachmentSizeY],
+		AttachmentSkinInfo[skinid][i][AttachmentSizeZ],
+		0xFF << 24 | AttachmentSkinInfo[skinid][i][AttachmentColor1],
+		0xFF << 24 | AttachmentSkinInfo[skinid][i][AttachmentColor2]);
+
+	SetPlayerPos(playerid, proxSpawn[playerid][0],proxSpawn[playerid][1],proxSpawn[playerid][2]+1.0);
+	return 1;
+}
+
+fp OnZombieUpdate(playerid)
 {
 	return 1;
 }

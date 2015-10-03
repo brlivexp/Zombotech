@@ -37,7 +37,6 @@ GenerateDropRateObjects()
 				RandomAcessObjects[o_slot] = ObjectsInfo[obj][Object_Model];
 				objCount++;
 				LastAssignedID++;
-				//printf("Slot %d has assumed the model %d!", o_slot, RandomAcessObjects[o_slot]);
 			}			
 		}		
 	}

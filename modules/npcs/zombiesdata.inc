@@ -80,7 +80,7 @@ enum ZombiesData
 	Float:zombie_follow_vector[3],
 	bool:playerstreamed[MAX_PLAYERS]
 };
-new ZombieInfo[MAX_ZOMBIES][ZombiesData];
+new ZombieInfo[][ZombiesData];
 
 stock LoadZombieSkins()
 {	

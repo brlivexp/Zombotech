@@ -20,7 +20,7 @@
 /*********************************************************************************************************/
 /*                                       SERVER DEFINES                                                  */
 /*********************************************************************************************************/
-#define DEV_VERSION 		"gamemodetext ..:Dev 0.1.1b:.."
+#define DEV_VERSION 		"gamemodetext ..:Dev 0.1.1b R2:.."
 #define MAX_SPAWNS 			(06000)
 #define gSpawns				0xF40F4
 #define fp%0(%1)			forward %0(%1); public %0(%1)
@@ -63,7 +63,7 @@ new szStrsPrintf[1024];
 #include "../modules/player/class.inc"
 #include "../modules/actors/bodies.inc"
 #include "../modules/player/anims.inc"//preload
-#include "../modules/npcs/zombiesdata.inc"
+#include "../modules/npcs/zombies.inc"
 #include "../modules/server/commands.inc"
 /*********************************************************************************************************/
 /*                                       SERVER CALLBACKS                                                */
@@ -74,11 +74,14 @@ new szStrsPrintf[1024];
 main()
 {
 	print("-------------------------------------------------------------------------------");
+
+	
 }
 
 
 public OnGameModeInit()
 {
+
 	CA_Init();
     UsePlayerPedAnims();
    	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, 999);
@@ -98,7 +101,22 @@ public OnGameModeInit()
 		GenerateSpawns();
 
 	SaveSpawnsPos("spawns.db");
-	
+
+	print("-------------------------------------");
+	print("Loading Road Nodes...");
+	print("-------------------------------------");
+	LoadRoadNodes();
+
+	print("-------------------------------------");
+	print("Loading Ped Nodes...");
+	print("-------------------------------------");
+	LoadPedNodes();
+
+	print("-------------------------------------");
+	print("Loading Spot Nodes...");
+	print("-------------------------------------");
+	LoadSpotNodes();
+
 	print("-------------------------------------");
 	print("Loading player classes...");
 	print("-------------------------------------");
@@ -128,13 +146,11 @@ public OnGameModeInit()
 	print("Loading zombies...");
 	print("-------------------------------------");
 	LoadZombieSkins();
-	//ConnectAllZombies();
+	//GenerateZombies();
     
     print("-------------------------------------");
     print("Loading server utils...");
     print("-------------------------------------");
-	SetTimer("UpdateZombies",	00700, true);
-	SetTimer("UpdateServer",	00900, true);
    	SetTimer("SaveAccounts", 300000, true);
 
  	SetWeather(26);
@@ -186,7 +202,11 @@ public OnPlayerConnect(playerid)
 
 		
 	}
-	else OnPlayerSpawn(playerid);
+	else
+	{
+		OnZombieConnect(playerid);
+		OnPlayerSpawn(playerid);
+	}
 	GetVectorPath(gSpawns, MRandom(MAX_SPAWNS), proxSpawn[playerid][0], proxSpawn[playerid][1], proxSpawn[playerid][2]);
 	return true;
 }
@@ -318,8 +338,8 @@ public OnPlayerSpawn(playerid)
 	
 	if(IsPlayerNPC(playerid)) 
 	{
-	    SetPVarInt(playerid, "SpawnLiberado", 1); 	   
-        SetPlayerPos(playerid, proxSpawn[playerid][0],proxSpawn[playerid][1],proxSpawn[playerid][2]+1.0);
+		SetPVarInt(playerid, "SpawnLiberado", 1);
+		OnZombieSpawn(playerid); 	
 		return true;
 	}
 	return true;
