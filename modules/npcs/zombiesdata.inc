@@ -38,7 +38,7 @@ enum ZombieClassData
 	Float:DeafultMoveSpeed,
 	bool:HasExtraAttachments
 };
-new ZombieClassInfo[MAX_SKINS][ZombieSkinsData];
+new ZombieClassInfo[MAX_SKINS][ZombieClassData];
 
 new ZombieSkins[] = 
 {

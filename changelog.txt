@@ -515,7 +515,27 @@ Adcionado:
 -Corpos ao redor de San Andreas (actors)
 
 Alterado:
--Novo método de geração de loot (muito mais organizado)
+-Novo método de geração de loot (FINAL - muito mais organizado)
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quinta-feira): 01/10/2015
+
+Adcionado:
+-Funções básicas para zombies
+-Mais estruturas para zombies (skins)
+-Attachmets para as skins 4 e 162
+-Comando zmode pra testar a skin e attachmets de zombies
+
+-------------------------------------------------------------------------------------------------------:
+
+(Sexta-feira): 02/10/2015
+
+Adcionado:
+-Mapa da entrada da ZOMBOTECH Coorp.
+-Nova câmera de spawn e request class
+
+-------------------------------------------------------------------------------------------------------:
 
 
 (A fazer):

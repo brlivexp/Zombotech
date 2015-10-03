@@ -23,8 +23,8 @@
 #define DEV_VERSION 		"gamemodetext ..:Dev 0.1.1b:.."
 #define MAX_SPAWNS 			(06000)
 #define gSpawns				0xF40F4
-#define fp%0(%1)								forward %0(%1); public %0(%1)
-#define fs%0(%1)								stock %0(%1)
+#define fp%0(%1)			forward %0(%1); public %0(%1)
+#define fs%0(%1)			stock %0(%1)
 
 
 /*********************************************************************************************************/
@@ -196,12 +196,11 @@ fp OnPlayerConnected(playerid)
 	if(IsPlayerNPC(playerid)) return 1;
 	TogglePlayerSpectating(playerid, 1);
 
-    SetPlayerInterior(playerid, 1);
     SetPlayerWeather(playerid, 1);
-	InterpolateCameraPos(playerid, 2527.8372, -1674.9968, 1016.3289, 2536.0066, -1674.4677, 1017.0624, 10000);
-	InterpolateCameraLookAt(playerid, 2526.8403, -1674.9524, 1016.2308, 2537.0039, -1674.4753, 1016.9648, 12000);
+	InterpolateCameraPos(playerid, -1983.1592, 728.8914, 46.9742, -1940.9475, 729.7084, 46.8430, 4000, CAMERA_MOVE);
+	InterpolateCameraLookAt(playerid, -1983.1118, 727.8882, 46.9843, -1940.9001, 728.7051, 46.7380, 4000, CAMERA_MOVE);
 		
-	SetTimerEx("OnPlayerInterpolate", 13000, false, "i", playerid);
+	SetTimerEx("OnPlayerInterpolate", 7000, false, "i", playerid);
 	
 	SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, "");
 	SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, "");

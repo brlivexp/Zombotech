@@ -11,9 +11,9 @@ LoadClasses()
 SetPlayerCameraToSpawn(playerid)
 {	
 	SetPlayerVirtualWorld(playerid, playerid);
-	SetPlayerPos(playerid, 2531.2891, -1676.7344, 1004.7344);
+	SetPlayerPos(playerid, -1951.9847, 709.2784, 46.5625);
 	SetPlayerFacingAngle(playerid, 0.0);
-	InterpolateCameraPos(playerid, 2536.0066, -1674.4677, 1017.0624, 2532.0164, -1674.8923, 1016.7307, 7000, CAMERA_MOVE);
-	InterpolateCameraLookAt(playerid, 2537.0039, -1674.4753, 1016.9648, 2531.0171, -1674.8708, 1016.5422, 9000, CAMERA_MOVE);
+	InterpolateCameraPos(playerid, -1940.9475, 729.7084, 46.8430, -1952.1494, 714.9960, 46.9683, 3000,  CAMERA_MOVE);
+	InterpolateCameraLookAt(playerid, -1940.9001, 728.7051, 46.7380, -1952.1409, 713.9916, 46.9133, 3000, CAMERA_MOVE);
 	return 1;
 }

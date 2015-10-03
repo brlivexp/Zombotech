@@ -1699,5 +1699,119 @@ LoadMaps()
 	tmpobjid = CreateDynamicObject(2675,-574.134,2608.158,52.704,0.000,0.000,0.000,-1,-1,-1,300.000,300.000);
 	tmpobjid = CreateDynamicObject(2676,-569.536,2609.370,52.644,0.000,0.000,0.000,-1,-1,-1,300.000,300.000);
 	tmpobjid = CreateDynamicObject(2677,-566.070,2605.887,52.804,0.000,0.000,0.000,-1,-1,-1,300.000,300.000);
+
+
+
+
+
+
+	//zombotech building
+	tmpobjid = CreateDynamicObject(8651,-1940.597,724.019,43.436,0.000,0.000,270.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "Bow_church_grass_alt", 0);
+	SetDynamicObjectMaterial(tmpobjid, 1, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	tmpobjid = CreateDynamicObject(3335,-1940.901,724.163,43.906,0.000,0.000,180.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 5150, "wiresetc_las2", "ganggraf01_LA_m", 0);
+	SetDynamicObjectMaterial(tmpobjid, 1, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	SetDynamicObjectMaterial(tmpobjid, 2, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	tmpobjid = CreateDynamicObject(3034,-1940.916,724.308,46.056,0.000,0.000,180.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	tmpobjid = CreateDynamicObject(3034,-1941.146,724.328,45.886,0.000,0.000,180.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "ZOMBOTECH", 100, "Ariel", 40, 1, -16777216, 0, 0);
+	tmpobjid = CreateDynamicObject(3034,-1940.675,724.318,45.856,0.000,0.000,180.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "____________", 100, "Ariel", 40, 1, -16777216, 0, 2);
+	tmpobjid = CreateDynamicObject(3034,-1940.666,724.328,45.516,0.000,0.000,180.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "____________", 100, "Ariel", 40, 1, -16777216, 0, 2);
+	tmpobjid = CreateDynamicObject(3034,-1940.135,724.318,45.296,0.000,0.000,180.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "WHERE YOUR NIGHTMARES BECOMES TRUE", 130, "Fixedsys", 20, 1, -65536, 0, 2);
+	tmpobjid = CreateDynamicObject(3034,-1941.155,724.318,44.736,0.000,0.000,180.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "© ipsTeam & Friends - www.zombotech.com", 100, "Calibri", 15, 1, -16777216, 0, 0);
+	tmpobjid = CreateDynamicObject(637,-1951.571,706.577,46.502,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 1, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(637,-1952.282,706.577,46.502,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 1, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(637,-1951.571,704.007,46.502,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 1, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(637,-1952.282,704.007,46.502,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 1, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(2599,-1950.934,708.978,46.038,-0.000,0.000,-179.999,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	tmpobjid = CreateDynamicObject(2599,-1953.015,708.978,46.038,-0.000,0.000,-179.999,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	tmpobjid = CreateDynamicObject(19482,-1950.954,709.096,46.169,-0.000,-17.599,90.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "Select\na\nskin", 130, "Ariel", 15, 1, -16777216, 0, 1);
+	tmpobjid = CreateDynamicObject(19483,-1951.925,707.795,47.742,0.000,0.000,90.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "{FF0000}Z{000000}ombo{FF0000}T{000000}ech", 120, "Ariel", 50, 1, 0, 0, 1);
+	tmpobjid = CreateDynamicObject(19482,-1953.035,709.096,46.169,-0.000,-17.599,90.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterialText(tmpobjid, 0, "Select\na\nskin", 130, "Ariel", 15, 1, -16777216, 0, 1);
+	tmpobjid = CreateDynamicObject(3264,-1951.912,707.745,45.672,0.000,0.000,180.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 1, 10101, "2notherbuildsfe", "ferry_build14", 0);
+	tmpobjid = CreateDynamicObject(19325,-1951.951,708.515,47.562,0.000,0.000,90.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 16640, "a51", "a51_glass", 0);
+	tmpobjid = CreateDynamicObject(19325,-1948.620,705.205,47.562,0.000,0.000,180.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 16640, "a51", "a51_glass", 0);
+	tmpobjid = CreateDynamicObject(19325,-1951.921,701.883,47.562,0.000,0.000,270.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 16640, "a51", "a51_glass", 0);
+	tmpobjid = CreateDynamicObject(19325,-1953.172,705.193,49.612,0.000,90.000,360.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(19325,-1955.233,705.173,47.562,0.000,0.000,360.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 16640, "a51", "a51_glass", 0);
+	tmpobjid = CreateDynamicObject(19325,-1950.690,705.193,49.592,0.000,90.000,360.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(18762,-1949.104,708.046,47.082,0.000,0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(18762,-1954.757,708.046,47.082,0.000,0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(18762,-1954.757,702.365,47.082,0.000,0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(18762,-1949.106,702.365,47.082,0.000,0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(18762,-1949.106,705.265,49.092,90.000,0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(18762,-1954.757,705.265,49.092,90.000,0.000,0.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(18762,-1952.057,708.035,49.032,90.000,0.000,90.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	tmpobjid = CreateDynamicObject(18762,-1952.057,702.354,49.032,90.000,0.000,90.000,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterial(tmpobjid, 0, 9514, "711_sfw", "shingles2", 0);
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	tmpobjid = CreateDynamicObject(637,-1950.870,706.577,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1951.591,706.577,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1952.302,706.577,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1953.002,706.577,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1953.713,706.577,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1950.150,706.577,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1950.870,704.007,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1951.591,704.007,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1952.302,704.007,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1953.002,704.007,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1953.713,704.007,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1950.150,704.007,45.742,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1949.445,703.997,46.256,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1949.445,706.577,46.256,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1950.155,703.997,46.636,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1950.155,706.587,46.636,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1954.417,703.997,46.256,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1954.417,706.577,46.256,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1953.718,703.997,46.636,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1953.718,706.587,46.636,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1950.870,706.577,46.132,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1951.591,706.577,46.132,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1952.302,706.577,46.132,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1953.002,706.577,46.132,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1950.870,704.007,46.132,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1951.591,704.007,46.132,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1952.302,704.007,46.132,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(637,-1953.002,704.007,46.132,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1950.866,703.997,46.986,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1950.866,706.587,46.986,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1952.998,703.997,46.986,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
+	tmpobjid = CreateDynamicObject(638,-1952.998,706.587,46.986,0.000,-0.000,0.000,-1,-1,-1,300.000,300.000);
 	return 1;
 }
