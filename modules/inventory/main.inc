@@ -7,10 +7,13 @@
 forward OnLoadPlayerItems(playerid);
 forward OnDroppedItemsLoad();
 forward OnCreatePlayerItem(playerid, itemid, model, amount, Float:durability, itemtime, expirable);
-forward OnLoadEquippedItems(playerid);
 forward ResetEquipAllowed(playerid);
 forward ResetPickupAllowed(playerid);
 forward ResetDropAllowed(playerid);
+forward SetPlayerEquippedItem(playerid, slotid, model, amount);
+forward OnLoadEquippedItems(playerid);
+forward OnDroppedItemsReset();
+forward LoadPlayerBagtype(playerid);
 
 
 ShowPlayerInventory(playerid)
@@ -191,10 +194,11 @@ ReloadPlayerWeapons(playerid)
 	for(new i; i < 4; i++)
 		if(PlayerEquippedItem[playerid][EItemID][i] && GetWeaponFromModel(PlayerEquippedItem[playerid][EItemModel][i]) && PlayerEquippedItem[playerid][EItemDurability][i] > 0.0)
 			GivePlayerWeapon(playerid, GetWeaponFromModel(PlayerEquippedItem[playerid][EItemModel][i]), PlayerEquippedItem[playerid][EItemAmount][i]);
+	return 1;
 }
 
 
-forward LoadPlayerBagtype(playerid);
+
 public LoadPlayerBagtype(playerid)
 {
 	new Float:OffX, Float:OffY,Float:OffZ, Float:RotX, Float:RotY, Float:RotZ, Float:SclX, Float:SclY, Float:SclZ, Color1, Color2, model;
@@ -647,7 +651,7 @@ LoadInventoryEquippedItems(playerid)
 			case 3://explosives
 			{
 				PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][45], model);
-				format(string, 64, "Explosive: %s", GetObjectName(model));
+				format(string, 64, "Tool: %s", GetObjectName(model));
 				PlayerTextDrawSetString(playerid, InventoryText[playerid][47], string);
 				format(string, 64, "Amount: %d", PlayerEquippedItem[playerid][EItemAmount][slotid]);
 				PlayerTextDrawSetString(playerid, InventoryText[playerid][48], string);
@@ -1026,9 +1030,12 @@ DropPlayerItem(playerid, itemid,  model, amount, Float:durability = 100.0, itemt
 	DroppedItem[itemid][DItemExpirable] = expirable;
 	DroppedItem[itemid][DItemWorld] = vworld;
 	DroppedItem[itemid][DItemInterior] = pinterior;
-	new txr_lib[32], txr_name[32], matcolor;
-	GetObjectTXRInfo(model, txr_lib, txr_name, matcolor);
-	SetDynamicObjectMaterial(DroppedItem[itemid][DItemObj], 0, model, txr_lib, txr_name, 0xFF << 24 | matcolor);
+	if(GetWeaponFromModel(model) == -1)
+	{
+		new txr_lib[32], txr_name[32], matcolor;
+		GetObjectTXRInfo(model, txr_lib, txr_name, matcolor);
+		SetDynamicObjectMaterial(DroppedItem[itemid][DItemObj], 0, model, txr_lib, txr_name, 0xFF << 24 | matcolor);
+	}
 	mysql_format(MySQL, label, sizeof(label), "UPDATE `items` SET `owner` = '-1', `coord_x` = '%f', `coord_y` = '%f', `coord_z` = '%f', `world` = '%d', `interior` = '%d',  `durability` = '%f', `time` = '%d', `expirable` = '%d' WHERE `id` = '%d'", x + diff + diff2, y + diff + diff2, z + 0.2, vworld, pinterior, durability, itemtime, expirable, itemid);
 	mysql_tquery(MySQL, label, "", "");
 	RemovePlayerItem(playerid, itemid);
@@ -1057,7 +1064,7 @@ public OnCreatePlayerItem(playerid, itemid, model, amount, Float:durability, ite
 }
 
 
-forward OnLoadEquippedItems(playerid);
+
 public OnLoadEquippedItems(playerid)
 {	
 	for(new row; row < cache_num_rows(); row++)
@@ -1092,32 +1099,36 @@ public OnLoadEquippedItems(playerid)
 
 OnPlayerEquipItem(playerid, slotid, itemid, model, amount, Float:durability, time, expirable, bool:loaded = false, Bone = 0, Float:OffX  = 0.0, Float:OffY = 0.0, Float:OffZ  = 0.0, Float:RotX = 0.0, Float:RotY = 0.0, Float:RotZ = 0.0, Float:SclX = 1.0, Float:SclY = 1.0, Float:SclZ = 1.0, Col1 = 0xFFFFFFFF, Col2 = 0xFFFFFFFF)
 {
+	if(UnableToEquip[playerid] && !loaded) return 0;
 	if(slotid == 8) return SetPlayerBagType(playerid, GetBagTypeFromModel(model), itemid, model, durability, time, expirable, true);
-	if(model == DEFAULT_OBJECT_MODEL) return SendClientMessage(playerid, 0xFF0000FF, #Error: invalid model id while loading equipped item!);
-	if(slotid != GetEquipableModelType(model)) return SendClientMessage(playerid, 0xFF0000FF, #Error: invalid slot while loading equipped item!);
-	if(7 > slotid > -1 && PlayerEquippedItem[playerid][EItemID][slotid]) return SendInfoText(playerid, "Inventory", "There is already an item on the target slot, unequip it before equip another one.", 4000);
-
-	PlayerPlaySound(playerid, 1150, 0,0,0);
-	
+	if(model == DEFAULT_OBJECT_MODEL) return SendClientMessage(playerid, 0xFF0000FF, "Error: invalid model id while loading equipped item!");
+	if(slotid != GetEquipableModelType(model)) return SendClientMessage(playerid, 0xFF0000FF, "Error: invalid slot while loading equipped item!");
+	if(slotid > 1 && PlayerEquippedItem[playerid][EItemID][slotid]) return SendInfoText(playerid, "Inventory", "]There is already a weapon equipped, you must unequip it before equip another one.", 3500);	
+	//filter items data
 	switch(slotid)
 	{
+		//case ammo
 		case -1:
 		{
 			new slot = GetAmmoEquipableSlot(model);
 		
 			if(!IsAmmoFromWeapon(model, PlayerEquippedItem[playerid][EItemModel][slot])) return SendInfoText(playerid, "Inventory", "Ammo type different from equiped weapon!", 3500);
-
+			PlayerPlaySound(playerid, 1150, 0,0,0);	
 			PlayerEquippedItem[playerid][EItemAmount][slot] += amount;
 			SetPlayerAmmo(playerid, GetWeaponFromModel(PlayerEquippedItem[playerid][EItemModel][slot]), PlayerEquippedItem[playerid][EItemAmount][slot]);
 			DestroyPlayerItem(playerid, itemid);
 			return LoadInventoryEquippedItems(playerid);
 		}
+		//case primary or secondary
 		case 0, 1:
 		{
-			if(PlayerEquippedItem[playerid][EItemModel][slotid] == model && -1 < GetEquipableModelType(model) < 2 && !loaded)
+			//check if uses the same type of ammo
+			if(PlayerEquippedItem[playerid][EItemID][slotid] && GetAmmoFromWeaponModel(model) == GetAmmoFromWeaponModel(PlayerEquippedItem[playerid][EItemModel][slotid]) && !loaded)
 			{
 				if(amount)
 				{
+					PlayerPlaySound(playerid, 1150, 0,0,0);
+					
 					PlayerEquippedItem[playerid][EItemAmount][slotid] += amount;
 					SetPlayerAmmo(playerid, GetWeaponFromModel(PlayerEquippedItem[playerid][EItemModel][slotid]), PlayerEquippedItem[playerid][EItemAmount][slotid]);
 					for(new s; s < 10 * PlayerInfo[playerid][bagtype]; s++)
@@ -1134,18 +1145,19 @@ OnPlayerEquipItem(playerid, slotid, itemid, model, amount, Float:durability, tim
 						}
 					}
 				}
-				return SendInfoText(playerid, "Inventory", "Error: There is already a weapon equipped, you must unequip it before equip another one.", 3500);
-			}		
+				else return SendInfoText(playerid, "Inventory", "This weapon has no ammo left to equip!", 3500);
+			}
+			else if(PlayerEquippedItem[playerid][EItemID][slotid]) return SendInfoText(playerid, "Inventory", "There is already a weapon equipped, you must unequip it before equip another one.", 3500);	
 		}
-		case 4..6:
-		{
-			if(GetClothModelBone(model) != INVALID_BONE) Bone = GetClothModelBone(model);
-		}
+		//case clothes
+		case 4..6: if(GetClothModelBone(model) != INVALID_BONE) Bone = GetClothModelBone(model);
+
 		case 7:
 		{
 			if(PlayerEquippedItem[playerid][EItemModel][7] == 19804 && PlayerEquippedItem[playerid][EItemID][7])
 			{
 				if(!time && PlayerEquippedItem[playerid][EItemModel][7]) return SendInfoText(playerid, "Inventory", "This padlock is no longer expirable! You can't extend your current expiration with this.", 3000);
+				PlayerPlaySound(playerid, 1150, 0,0,0);	
 				PlayerEquippedItem[playerid][EItemTime][7] += time;
 				return UpdatePadlockInfo(playerid);
 			}
@@ -1184,9 +1196,8 @@ OnPlayerEquipItem(playerid, slotid, itemid, model, amount, Float:durability, tim
 				
 		if(itemid >= MAX_ITEMS) return SendInfoText(playerid, "Inventory", "Server couldn't create your equiped item due to limit has been reached!", 3000);
 
-		UnableToEquip[playerid] = true;
-		
-		SetTimerEx("SetPlayerAbleToEquip", 600, false, "i", playerid);
+		UnableToEquip[playerid] = true;		
+		SetTimerEx("SetPlayerAbleToEquip", 1000, false, "i", playerid);
 		
 		if(-1 < GetEquipableModelType(model) < 8)
 		{
@@ -1241,7 +1252,6 @@ OnPlayerEquipItem(playerid, slotid, itemid, model, amount, Float:durability, tim
 	return 1;
 }
 
-forward SetPlayerEquippedItem(playerid, slotid, model, amount);
 public SetPlayerEquippedItem(playerid, slotid, model, amount)
 {
 	switch(slotid)
@@ -1382,7 +1392,7 @@ SavePlayerItems(playerid)
 		PlayerInfo[playerid][pid], PlayerItem[playerid][ItemAmount][i], PlayerItem[playerid][ItemModel][i], PlayerItem[playerid][ItemDurability][i], PlayerItem[playerid][ItemTime][i], PlayerItem[playerid][ItemExpirable][i], PlayerItem[playerid][ItemID][i]);
 		mysql_tquery(MySQL, query, "", "");
 	}
-	
+
 	for(new e; e < MAX_EQUIPPED_INVENTORY_SLOTS; e++)
 	{		
 		if(!PlayerEquippedItem[playerid][EItemID][e] || !PlayerEquippedItem[playerid][EItemModel][e]) continue;
@@ -1444,19 +1454,30 @@ public OnDroppedItemsLoad()
 
 SplitPlayerItem(playerid, slotid)
 {
+	if(UnableToSplit[playerid]) return 0;
 	if(!CountPlayerFreeSlots(playerid)) return SendInfoText(playerid, "Inventory", "You don't have free slots to split this item!", 3000);
 	if(GetWeaponFromModel(PlayerItem[playerid][ItemModel][slotid]) != -1)
 	{
+		UnableToSplit[playerid] = true;
+		UnableToEquip[playerid] = true;
 		new ammo = GetAmmoFromWeaponModel(PlayerItem[playerid][ItemModel][slotid]);
 		if(!ammo) return SendInfoText(playerid, "Inventory", "We're sorry, you cannot split this type of weapon.", 3000);
-		PlayerItem[playerid][ItemAmount][slotid] = PlayerItem[playerid][ItemAmount][slotid]/2;
+		new amount = PlayerItem[playerid][ItemAmount][slotid] / 2;
+		PlayerItem[playerid][ItemAmount][slotid] = amount;
 		if(IsPlayerInInventory(playerid)) UpdatePlayerSlot(playerid, slotid);
-		CreatePlayerItem(playerid, ammo, PlayerItem[playerid][ItemAmount][slotid], 100.0,  PlayerItem[playerid][ItemTime][slotid], PlayerItem[playerid][ItemExpirable][slotid]);
+		CreatePlayerItem(playerid, ammo, amount, 100.0,  PlayerItem[playerid][ItemTime][slotid], PlayerItem[playerid][ItemExpirable][slotid]);
+		SetTimerEx("SetPlayerAbleToEquip", 1000, false, "i", playerid);
+		SetTimerEx("SetPlayerAbleToSplit", 1000, false, "i", playerid);
 		return 1;
 	}
-	PlayerItem[playerid][ItemAmount][slotid] = PlayerItem[playerid][ItemAmount][slotid]/2;
+	UnableToSplit[playerid] = true;
+	UnableToEquip[playerid] = true;
+	SetTimerEx("SetPlayerAbleToEquip", 1000, false, "i", playerid);
+	SetTimerEx("SetPlayerAbleToSplit", 1000, false, "i", playerid);
+	new amount = PlayerItem[playerid][ItemAmount][slotid] / 2;
+	PlayerItem[playerid][ItemAmount][slotid] = amount;
 	if(IsPlayerInInventory(playerid)) UpdatePlayerSlot(playerid, slotid);
-	CreatePlayerItem(playerid, PlayerItem[playerid][ItemModel][slotid], PlayerItem[playerid][ItemAmount][slotid], 100.0,  PlayerItem[playerid][ItemTime][slotid], PlayerItem[playerid][ItemExpirable][slotid]);
+	CreatePlayerItem(playerid, PlayerItem[playerid][ItemModel][slotid], amount, 100.0,  PlayerItem[playerid][ItemTime][slotid], PlayerItem[playerid][ItemExpirable][slotid]);
 	return 1;
 }
 
@@ -1489,7 +1510,6 @@ ResetDroppedObjects()
 	return 1;
 }
 
-forward OnDroppedItemsReset();
 public OnDroppedItemsReset()
 {
 	print("Server dropped objects cleared...\nGenerating drop rates...");

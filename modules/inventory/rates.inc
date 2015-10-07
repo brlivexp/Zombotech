@@ -64,6 +64,8 @@ stock RegenerateLoots()
 					
 	for(new o; o < MAX_DROPPED_ITEMS; o++)
 	{
+		new sort = random(2);
+		if(!sort) continue;
 		new tmpModel = random(sizeof RandomAcessObjects),
 		Float:tmpPosX = SpotNodes[o][SNodeX],
 		Float:tmpPosY = SpotNodes[o][SNodeY],
@@ -99,4 +101,3 @@ stock RegenerateLoots()
 	}
 	return print("Loots sucessfully generated...");
 }
-

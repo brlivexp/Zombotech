@@ -20,7 +20,7 @@
 /*********************************************************************************************************/
 /*                                       SERVER DEFINES                                                  */
 /*********************************************************************************************************/
-#define DEV_VERSION 		"gamemodetext ..:Dev 0.1.1b R2:.."
+#define DEV_VERSION 		"gamemodetext ..:Dev 0.1.1b R2-3:.."
 #define MAX_SPAWNS 			(06000)
 #define gSpawns				0xF40F4
 #define fp%0(%1)			forward %0(%1); public %0(%1)
@@ -73,8 +73,6 @@ new szStrsPrintf[1024];
 
 main()
 {
-	print("-------------------------------------------------------------------------------");
-
 	
 }
 
@@ -198,9 +196,7 @@ public OnPlayerConnect(playerid)
 	    CleanPlayerLoginData(playerid);
 	    ResetPlayerAttachments(playerid);
 		SetTimerEx("OnPlayerConnected", 1000, false, "i", playerid);
-		EnablePlayerCameraTarget(playerid, 1);
-
-		
+		EnablePlayerCameraTarget(playerid, 1);		
 	}
 	else
 	{
@@ -290,19 +286,6 @@ public OnPlayerAmmoChange(playerid, weaponid, newammo, oldammo)
 	if(0 <= slot <= 3)
 		PlayerEquippedItem[playerid][EItemAmount][slot] = newammo;
 	else return printf("Server skipped ammo data for user %s (%d, %d, %d)", GetPlayerNameEx(playerid), weaponid, newammo, oldammo);
-	return 1;
-}
-
-public OnPlayerCurrentWeaponChange(playerid, new_weapon, oldweapon)
-{
-	new color, Float:rx, Float:ry, Float:rz, Float:zoom;
-	PlayerTextDrawFont(playerid, HUDText[playerid][41], !new_weapon ? 4 : 5);
-	GetObjectTXDInfo(GetModelFromWeapon(new_weapon), color, rx, ry, rz, zoom);
-	PlayerTextDrawSetPreviewRot(playerid, HUDText[playerid][41], rx, ry, rz, 1.2);
-	PlayerTextDrawSetPreviewModel(playerid, HUDText[playerid][41], GetModelFromWeapon(new_weapon));
-	if(!IsPlayerInInventory(playerid)) PlayerTextDrawShow(playerid, HUDText[playerid][41]);
-
-	
 	return 1;
 }
 

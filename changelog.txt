@@ -537,7 +537,44 @@ Adcionado:
 
 -------------------------------------------------------------------------------------------------------:
 
+(Sábado): 03/10/2015
+
+Alterado:
+-Nodes agora carregam remotamente quando o servidor é iniciado (poupa 1 minuto de compilação)
+-Fixada rotação espacial de cada objeto (agradecimentos especiais ao JustMe por me ajudar com os itens)
+-Mudanças na estrutura de conexão de zumbis
+
+Removido:
+-Timers que não eram usados pelo servidor ainda estavam ativos
+-Arquivos .db que não eram usados pelo servidor
+
+-------------------------------------------------------------------------------------------------------:
+
+(Domingo): 04/10/2015
+
+Fixado:
+-Armas ficavam invisíveis quando dropadas por players
+-Armas especiais eram equipadas em slots incorretos
+
+Removido:
+-Textdraw de armas e health bar da HUD
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quarta-feira): 07/10/2015
+
+Fixado:
+-Diversos bugs ao equipar armas
+-Não era possivel equipar munição de uma arma de mesmo tipo
+
+-------------------------------------------------------------------------------------------------------:
 
 (A fazer):
--Modificar HUD (health bar, loot crosshair)
+-Adcionar limite de munição para as armas (1000 global), editar equip de munição
+-Fixar munição ao equipar armas do mesmo tipo
+-Adcionar estrutura de stack ao inventário
+-Alterar a estrutura de drop e adcionar max_drop_amount e min_drop_amount
+-Alterar estrutura da objectsdata e adcionar height_variation pra cada objeto
+-Adcionar array de objetos por tipo (spawn type) e modificar a estrutura de spawn deles
+-Configurar o drop rate de cada item
 -Tornar o loot mais preciso (mira)

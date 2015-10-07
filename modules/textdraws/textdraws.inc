@@ -13,7 +13,7 @@ new PlayerText:RegisterScreenText[MAX_PLAYERS][4];
 
 new Text:CreditScreenStatic[21];
 
-new PlayerText:HUDText[MAX_PLAYERS][45];
+new PlayerText:HUDText[MAX_PLAYERS][32];
 
 new Text:InventoryStatic[38];
 new PlayerText:InventoryText[MAX_PLAYERS][78];
@@ -3025,194 +3025,17 @@ LoadPlayerTextDraws(playerid)
 	PlayerTextDrawSetProportional(playerid,HUDText[playerid][29], 1);
 	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][29], 0);
 
-	HUDText[playerid][30] = CreatePlayerTextDraw(playerid,501.000000, 26.000000, "_");
+
+	HUDText[playerid][30] = CreatePlayerTextDraw(playerid,498.000000, 74.000000, "$00000000");
 	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][30], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][30], 1);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][30], 0.500000, 5.000000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][30], -1768515841);
+	PlayerTextDrawFont(playerid,HUDText[playerid][30], 3);
+	PlayerTextDrawLetterSize(playerid,HUDText[playerid][30], 0.629998, 2.599998);
+	PlayerTextDrawColor(playerid,HUDText[playerid][30], -16776961);
 	PlayerTextDrawSetOutline(playerid,HUDText[playerid][30], 0);
 	PlayerTextDrawSetProportional(playerid,HUDText[playerid][30], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][30], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][30], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][30], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][30], 538.000000, 0.000000);
+	PlayerTextDrawSetShadow(playerid,HUDText[playerid][30], 3);
 	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][30], 0);
 
-	HUDText[playerid][31] = CreatePlayerTextDraw(playerid,498.000000, 74.000000, "$00000000");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][31], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][31], 3);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][31], 0.629998, 2.599998);
-	PlayerTextDrawColor(playerid,HUDText[playerid][31], -16776961);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][31], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][31], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][31], 3);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][31], 0);
-
-	HUDText[playerid][32] = CreatePlayerTextDraw(playerid,495.000000, 20.000000, "LD_POOL:Ball");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][32], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][32], 4);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][32], 0.500000, 1.000000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][32], 255);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][32], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][32], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][32], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][32], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][32], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][32], 7.000000, 11.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][32], 0);
-
-	HUDText[playerid][33] = CreatePlayerTextDraw(playerid,495.000000, 65.000000, "LD_POOL:Ball");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][33], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][33], 4);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][33], 0.500000, 1.000000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][33], 255);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][33], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][33], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][33], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][33], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][33], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][33], 8.000000, 11.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][33], 0);
-
-	HUDText[playerid][34] = CreatePlayerTextDraw(playerid,537.000000, 65.000000, "LD_POOL:Ball");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][34], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][34], 4);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][34], 0.500000, 1.000000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][34], 255);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][34], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][34], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][34], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][34], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][34], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][34], 8.000000, 11.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][34], 0);
-
-	HUDText[playerid][35] = CreatePlayerTextDraw(playerid,537.000000, 20.000000, "LD_POOL:Ball");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][35], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][35], 4);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][35], 0.500000, 1.000000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][35], 255);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][35], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][35], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][35], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][35], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][35], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][35], 8.000000, 11.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][35], 0);
-
-	HUDText[playerid][36] = CreatePlayerTextDraw(playerid,501.000000, 26.000000, "_");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][36], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][36], 1);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][36], 0.500000, 5.000000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][36], -1768515841);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][36], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][36], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][36], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][36], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][36], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][36], 538.000000, 0.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][36], 0);
-
-	HUDText[playerid][37] = CreatePlayerTextDraw(playerid,501.000000, 22.000000, "_");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][37], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][37], 1);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][37], 0.500000, 0.000000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][37], 255);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][37], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][37], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][37], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][37], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][37], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][37], 539.000000, 0.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][37], 0);
-
-	HUDText[playerid][38] = CreatePlayerTextDraw(playerid,501.000000, 74.000000, "_");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][38], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][38], 1);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][38], 0.500000, 0.000000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][38], -1);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][38], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][38], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][38], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][38], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][38], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][38], 539.000000, 0.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][38], 0);
-
-	HUDText[playerid][39] = CreatePlayerTextDraw(playerid,498.000000, 26.000000, "_");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][39], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][39], 1);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][39], 0.509998, 4.800000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][39], 255);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][39], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][39], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][39], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][39], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][39], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][39], 498.000000, 0.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][39], 0);
-
-	HUDText[playerid][40] = CreatePlayerTextDraw(playerid,547.000000, 26.000000, "_");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][40], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][40], 1);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][40], 0.509998, 4.800000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][40], -1);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][40], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][40], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][40], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][40], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][40], 255);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][40], 537.000000, 0.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][40], 0);
-
-	HUDText[playerid][41] = CreatePlayerTextDraw(playerid,501.000000, 22.000000, "HUD:fist");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][41], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][41], 4);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][41], 0.500000, 1.000000);
-	PlayerTextDrawColor(playerid,HUDText[playerid][41], -1);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][41], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][41], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][41], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][41], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][41], 0x00000000);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][41], 37.000000, 43.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][41], 0);
-
-	HUDText[playerid][42] = CreatePlayerTextDraw(playerid,548.000000, 66.000000, "_");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][42], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][42], 1);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][42], 0.500000, 0.799998);
-	PlayerTextDrawColor(playerid,HUDText[playerid][42], -1);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][42], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][42], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][42], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][42], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][42], 505290495);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][42], 624.000000, 0.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][42], 0);
-
-	HUDText[playerid][43] = CreatePlayerTextDraw(playerid,550.000000, 68.000000, "_");
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][43], 255);
-	PlayerTextDrawFont(playerid,HUDText[playerid][43], 1);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][43], 0.500000, 0.399998);
-	PlayerTextDrawColor(playerid,HUDText[playerid][43], -16776961);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][43], 0);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][43], 1);
-	PlayerTextDrawSetShadow(playerid,HUDText[playerid][43], 1);
-	PlayerTextDrawUseBox(playerid,HUDText[playerid][43], 1);
-	PlayerTextDrawBoxColor(playerid,HUDText[playerid][43], -939523841);
-	PlayerTextDrawTextSize(playerid,HUDText[playerid][43], 622.000000, 0.000000);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][43], 0);
-
-	HUDText[playerid][44] = CreatePlayerTextDraw(playerid,585.000000, 66.000000, "100");
-	PlayerTextDrawAlignment(playerid,HUDText[playerid][44], 2);
-	PlayerTextDrawBackgroundColor(playerid,HUDText[playerid][44], 0);
-	PlayerTextDrawFont(playerid,HUDText[playerid][44], 3);
-	PlayerTextDrawLetterSize(playerid,HUDText[playerid][44], 0.270000, 0.799998);
-	PlayerTextDrawColor(playerid,HUDText[playerid][44], -1);
-	PlayerTextDrawSetOutline(playerid,HUDText[playerid][44], 1);
-	PlayerTextDrawSetProportional(playerid,HUDText[playerid][44], 1);
-	PlayerTextDrawSetSelectable(playerid,HUDText[playerid][44], 0);
 	
 	InventoryText[playerid][0] = CreatePlayerTextDraw(playerid,285.000000, 413.000000, "use");
 	PlayerTextDrawBackgroundColor(playerid,InventoryText[playerid][0], 255);

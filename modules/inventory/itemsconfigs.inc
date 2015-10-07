@@ -2,6 +2,7 @@
 #define MAX_EQUIPPED_INVENTORY_SLOTS	9
 #define DEFAULT_OBJECT_MODEL	19475
 
+#define MAX_WEAPON_AMMO		1000
 
 #define AMMO_TYPE_PISTOL 0
 #define AMMO_TYPE_SMG 1 
@@ -122,10 +123,10 @@ GetEquipableModelType(model)
 	switch(model)
 	{
 		case 3052, 19995, 2037, 2040, 3016, 1636: return -1;//ammo
-		case 349..351, 355..358, 360..362: return 0;//primary
+		case 349..351, 355..358: return 0;//primary
 		case 346..348, 352, 353: return 1;//secondary
 		case 321..326, 331, 333..339, 341, 365..369: return 2;//melee
-		case 359: return 3;//special
+		case 359..364: return 3;//special
 		case 2052,2053,2054,18636,18638..18640: return 4;//head wears
 		case 1242, 19142: return 5;//body wears
 		case 19804: return 7; //padlock
@@ -305,6 +306,7 @@ new PlayerSelectedSlot[MAX_PLAYERS char];
 new bool:UnableToDrop[MAX_PLAYERS char];
 new bool:UnableToPickup[MAX_PLAYERS char];
 new bool:UnableToEquip[MAX_PLAYERS char];
+new bool:UnableToSplit[MAX_PLAYERS char];
 new PlayerTargetItem[MAX_PLAYERS];
 
 ResetAllowanceInfo(playerid)
@@ -330,4 +332,10 @@ forward SetPlayerAbleToPickup(playerid);
 public SetPlayerAbleToPickup(playerid)
 {
 	UnableToPickup[playerid] = false;
+}
+
+forward SetPlayerAbleToSplit(playerid);
+public SetPlayerAbleToSplit(playerid)
+{
+	UnableToSplit[playerid] = false;
 }
