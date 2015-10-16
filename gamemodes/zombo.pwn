@@ -453,7 +453,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 			if(iLimiter >= 8)
 			{
 				UnableToDrop[playerid] = true;
-				SetTimerEx("SetPlayerAllowedToDrop", 1500, false, "i", playerid);
+				SetTimerEx("SetPlayerAbleToDrop", 1500, false, "i", playerid);
 				return SendInfoText(playerid, "Inventory", "Too much items nearby, you cannot drop this item here.", 4000);
 			}
 				
