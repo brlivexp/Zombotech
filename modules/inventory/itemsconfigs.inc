@@ -292,7 +292,7 @@ bool:IsObjectUsable(modelid)
 
 	GetObjectEffects(modelid, ehunger, ethirst, edamage, eenergy, etemp, ehealth);
 
-	if(ehunger || ethirst || eenergy || ehealth || GetBagTypeFromModel(modelid) != 1) return true;
+	if(ehunger || ethirst || eenergy || ehealth) return true;
 	return false;
 }
 

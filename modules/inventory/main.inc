@@ -1116,7 +1116,12 @@ public OnLoadEquippedItems(playerid)
 OnPlayerEquipItem(playerid, slotid, itemid, model, amount, Float:durability, time, expirable, bool:loaded = false, Bone = 0, Float:OffX  = 0.0, Float:OffY = 0.0, Float:OffZ  = 0.0, Float:RotX = 0.0, Float:RotY = 0.0, Float:RotZ = 0.0, Float:SclX = 1.0, Float:SclY = 1.0, Float:SclZ = 1.0, Col1 = 0xFFFFFFFF, Col2 = 0xFFFFFFFF)
 {
 	if(UnableToEquip[playerid] && !loaded) return 0;
-	if(slotid == 8) return SetPlayerBagType(playerid, GetBagTypeFromModel(model), itemid, model, durability, time, expirable, true);
+	if(slotid == 8) 
+	{
+		if(PlayerInfo[playerid][bagtype] < 2) SetPlayerBagType(playerid, GetBagTypeFromModel(model), itemid, model, PlayerItem[playerid][ItemDurability][slotid], PlayerItem[playerid][ItemTime][slotid], PlayerItem[playerid][ItemExpirable][slotid], false); 
+			else return SendInfoText(playerid, "Inventory", "You already have a backpack in use, remove it before using another one.", 3000);
+		return DestroyPlayerItem(playerid, itemid);
+	}
 	if(model == DEFAULT_OBJECT_MODEL) return SendClientMessage(playerid, 0xFF0000FF, "Error: invalid model id while loading equipped item!");
 	if(slotid != GetEquipableModelType(model)) return SendClientMessage(playerid, 0xFF0000FF, "Error: invalid slot while loading equipped item!");
 	if(slotid > 1 && PlayerEquippedItem[playerid][EItemID][slotid]) return SendInfoText(playerid, "Inventory", "Error: There is already a weapon equipped, you must unequip it before equip another one.", 3500);	
@@ -1542,16 +1547,7 @@ SplitPlayerItem(playerid, slotid)
 
 OnPlayerUseItem(playerid, model, slot, itemid, use_amount)
 {
-	switch(model)
-	{
-		
-		case 3026, 371, 19559: 
-		{
-			if(PlayerInfo[playerid][bagtype] < 2) SetPlayerBagType(playerid, GetBagTypeFromModel(model), itemid, model, PlayerItem[playerid][ItemDurability][slot], PlayerItem[playerid][ItemTime][slot], PlayerItem[playerid][ItemExpirable][slot], false); 
-			else return SendInfoText(playerid, "Inventory", "You already have a backpack in use, remove it before using another one.", 3000);
-		}
-	}
-	
+	#pragma unused model
 	if( PlayerItem[playerid][ItemAmount][slot] == use_amount ) DestroyPlayerItem(playerid, itemid);
 	else
 	{

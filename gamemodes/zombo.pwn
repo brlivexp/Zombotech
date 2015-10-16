@@ -20,7 +20,7 @@
 /*********************************************************************************************************/
 /*                                       SERVER DEFINES                                                  */
 /*********************************************************************************************************/
-#define DEV_VERSION 		"gamemodetext ..:Dev 0.1.1b R2-3:.."
+#define DEV_VERSION 		"gamemodetext ..:Dev 0.1.1b R3:.."
 #define MAX_SPAWNS 			(06000)
 #define gSpawns				0xF40F4
 #define fp%0(%1)			forward %0(%1); public %0(%1)
@@ -428,7 +428,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 		new itime = PlayerItem[playerid][ItemTime][slot];
 		new expirable = PlayerItem[playerid][ItemExpirable][slot];
 
-		if(slot == -1 || itemid == -1 || GetEquipableModelType(model) == 10 || GetEquipableModelType(model) == 8) return SendInfoText(playerid, "Inventory", "You can't equip this kind of item!", 5000);
+		if(slot == -1 || itemid == -1 || GetEquipableModelType(model) == 10) return SendInfoText(playerid, "Inventory", "You can't equip this kind of item!", 5000);
 		OnPlayerEquipItem(playerid, GetEquipableModelType(model), itemid, model, amount, durability, itime, expirable, false);
 		return 1;
 	}

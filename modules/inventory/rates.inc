@@ -37,6 +37,14 @@ stock RegenerateLoots()
 		Float:tmpPosY = SpotNodes[o][SNodeY],
 		Float:tmpPosZ = SpotNodes[o][SNodeZ];
 
+		if(!tmpModel)
+		{
+			while(!tmpModel)
+			{
+				tmpModel = GetRandomModelType(LootType);
+			}			
+		}
+
 		new minimum, maximum;
 		GetObjectDropAmount(tmpModel, minimum, maximum);
 		new tmpAmount = MRandRange(minimum, maximum);
