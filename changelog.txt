@@ -569,12 +569,32 @@ Fixado:
 
 -------------------------------------------------------------------------------------------------------:
 
+(Quarta-feira): 14/10/2015
+
+Adcionado:
+-Limite de munição de armas de fogo agora é de 1000 balas
+-Adcionado de stack ao inventário, ao pegar um item o outro só é criado caso não possa empilhar
+-Suporte para multi-items com mesmo modelo
+-Novos itens ao catálogo
+
+Alterado:
+-Modificadas cores em alguns objetos do catálogo
+
+Fixado:
+-Dupbug de munição causado por falhas no script de update de munição
+-Refeito método de equipar munição agora está 100%
+
+-------------------------------------------------------------------------------------------------------:
+
+(Quinta-feira): 15/10/2015
+
+Alterado:
+-Método de spawn de itens, agora o tipo do item é considerado na área em que o mesmo spawna
+-Itens agora têm quantidade randômica (minima e máxima) de acordo com o script
+-Pequenas correções no drop de itens
+
+-------------------------------------------------------------------------------------------------------:
+
 (A fazer):
--Adcionar limite de munição para as armas (1000 global), editar equip de munição
--Fixar munição ao equipar armas do mesmo tipo
--Adcionar estrutura de stack ao inventário
--Alterar a estrutura de drop e adcionar max_drop_amount e min_drop_amount
--Alterar estrutura da objectsdata e adcionar height_variation pra cada objeto
--Adcionar array de objetos por tipo (spawn type) e modificar a estrutura de spawn deles
--Configurar o drop rate de cada item
 -Tornar o loot mais preciso (mira)
+-Fixar bypass em dados de registro (email & outros?)

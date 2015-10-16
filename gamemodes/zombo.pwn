@@ -149,7 +149,7 @@ public OnGameModeInit()
     print("-------------------------------------");
     print("Loading server utils...");
     print("-------------------------------------");
-   	SetTimer("SaveAccounts", 300000, true);
+   	SetTimer("SaveAccounts", 200000, true);
 
  	SetWeather(26);
  	SetWorldTime(02);
@@ -229,7 +229,7 @@ fp OnPlayerConnected(playerid)
 fp OnPlayerInterpolate(playerid)
 {
 	ShowPlayerMainMenu(playerid);	
-	PlayerUpdateTimer[playerid] = SetTimerEx("OnPlayerUpdateEx", 50, true, "i", playerid);
+	PlayerUpdateTimer[playerid] = SetTimerEx("OnPlayerUpdateEx", 100, true, "i", playerid);
 	return true;
 }
 
@@ -283,9 +283,8 @@ public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
 public OnPlayerAmmoChange(playerid, weaponid, newammo, oldammo)
 {
 	new slot = GetEquipableModelType(GetModelFromWeapon(weaponid));
-	if(0 <= slot <= 3)
+	if(0 <= slot <= 3 && oldammo > newammo)
 		PlayerEquippedItem[playerid][EItemAmount][slot] = newammo;
-	else return printf("Server skipped ammo data for user %s (%d, %d, %d)", GetPlayerNameEx(playerid), weaponid, newammo, oldammo);
 	return 1;
 }
 
@@ -435,6 +434,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	}
 	if(playertextid == InventoryText[playerid][2])
 	{
+		if(UnableToDrop[playerid]) return 0;
 		if(IsPlayerInAnyVehicle(playerid)) return SendInfoText(playerid, "Inventory", "You can't drop items while driver or passenger", 4000);
 		new slot = PlayerSelectedSlot[playerid];
 		new itemid = PlayerItem[playerid][ItemID][slot];		
@@ -444,6 +444,20 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 		new itime = PlayerItem[playerid][ItemTime][slot];
 		new expirable = PlayerItem[playerid][ItemExpirable][slot];
 
+		new iLimiter;
+		for(new i; i < sizeof DroppedItem; i++)
+		{
+			if(!DroppedItem[i][DItemModel] || DroppedItem[i][DItemModel] == DEFAULT_OBJECT_MODEL) continue;
+			if(GetPlayerDistanceFromPoint(playerid, DroppedItem[i][DItemPosX], DroppedItem[i][DItemPosY],  DroppedItem[i][DItemPosZ]) > 8.0) continue;
+			iLimiter++;
+			if(iLimiter >= 8)
+			{
+				UnableToDrop[playerid] = true;
+				SetTimerEx("SetPlayerAllowedToDrop", 1500, false, "i", playerid);
+				return SendInfoText(playerid, "Inventory", "Too much items nearby, you cannot drop this item here.", 4000);
+			}
+				
+		}
 		if(slot == -1 || itemid == -1 || !itemid || !model) return SendInfoText(playerid, "Inventory", "Empty slot or invalid item!", 4000);
 		return DropPlayerItem(playerid, itemid,  model, amount, durability, itime, expirable);
 	}

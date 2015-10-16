@@ -275,7 +275,7 @@ public OnCommandCalled(playerid, params[])
 	{
 		return ShowPlayerCraftingMenu(playerid);	
 	} 
-	get_cmd_params(stopcraft)
+	get_cmd_params(scft)
 	{
 		return HidePlayerCraftingMenu(playerid);
 	} 

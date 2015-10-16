@@ -39,12 +39,12 @@ ShowPlayerLootInfo(playerid, itemid)
 	for(new i = 1; i < 12; i++) PlayerTextDrawShow(playerid, LootText[playerid][i]);
 	
 	
-	if(PlayerTextDrawGetPreviewModel(playerid, LootText[playerid][0]) ^ model)
+	if(PlayerTextDrawGetPreviewModel(playerid, LootText[playerid][0]) ^ model && PlayerTextDrawGetPreviewModel(playerid, LootText[playerid][0]) != model / 100)
 	{
 		new Float:rx, Float:ry, Float:rz, Float:zoom, color;
 		GetObjectTXDInfo(model, color, rx, ry, rz, zoom);
 		PlayerTextDrawColor(playerid, LootText[playerid][0], color << 8 | 0xFF);
-		PlayerTextDrawSetPreviewModel(playerid, LootText[playerid][0], model);
+		PlayerTextDrawSetPreviewModel(playerid, LootText[playerid][0], model < 20000 ? model : model / 100);
 		PlayerTextDrawSetPreviewRot(playerid, LootText[playerid][0], rx, ry, rz, zoom);
 		PlayerTextDrawShow(playerid, LootText[playerid][0]);
 	}

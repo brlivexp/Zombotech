@@ -461,7 +461,7 @@ UpdatePadlockInfo(playerid)
 {
 	if(PlayerEquippedItem[playerid][EItemModel][7] == 19804 && PlayerEquippedItem[playerid][EItemExpirable][7] && PlayerEquippedItem[playerid][EItemTime][7] <= gettime()) RemovePlayerPadlock(playerid);
 	new ipadlock = 19804;
-	if(PlayerEquippedItem[playerid][EItemModel][7] ^ 19804) ipadlock = DEFAULT_OBJECT_MODEL;	
+	if(PlayerEquippedItem[playerid][EItemModel][7] != 19804) ipadlock = DEFAULT_OBJECT_MODEL;	
 	
 	
 	PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][12], ipadlock);
@@ -526,7 +526,7 @@ LoadInventoryPageItems(playerid)
 				GetObjectTXDInfo(mmodelid, color, rx, ry, rz, zoom);
 				PlayerTextDrawColor(playerid, InventoryText[playerid][i], color << 8 | 0xFF);
 				PlayerTextDrawSetPreviewRot(playerid, InventoryText[playerid][i], rx, ry, rz, zoom);
-				PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][i], mmodelid);				
+				PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][i], mmodelid < 20000 ? mmodelid : mmodelid / 100);				
 				format(string, 64, "%s ~r~(%d)", GetObjectName(mmodelid), PlayerItem[playerid][ItemAmount][i - 20]);
 				PlayerTextDrawSetString(playerid, InventoryText[playerid][i + 48], string);
 				if(IsPlayerInInventory(playerid))
@@ -546,7 +546,7 @@ LoadInventoryPageItems(playerid)
 				GetObjectTXDInfo(mmodelid, color, rx, ry, rz, zoom);
 				PlayerTextDrawColor(playerid, InventoryText[playerid][i], color << 8 | 0xFF);
 				PlayerTextDrawSetPreviewRot(playerid, InventoryText[playerid][i], rx, ry, rz, zoom);
-				PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][i], mmodelid);				
+				PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][i], mmodelid < 20000 ? mmodelid : mmodelid / 100);				
 				format(string, 64, "%s ~r~(%d)", GetObjectName(mmodelid), PlayerItem[playerid][ItemAmount][i - 10]);
 				PlayerTextDrawSetString(playerid, InventoryText[playerid][i + 48], string);
 				if(IsPlayerInInventory(playerid))
@@ -566,7 +566,7 @@ LoadInventoryPageItems(playerid)
 				GetObjectTXDInfo(mmodelid, color, rx, ry, rz, zoom);
 				PlayerTextDrawColor(playerid, InventoryText[playerid][i], color << 8 | 0xFF);
 				PlayerTextDrawSetPreviewRot(playerid, InventoryText[playerid][i], rx, ry, rz, zoom);
-				PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][i], mmodelid);				
+				PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][i], mmodelid < 20000 ? mmodelid : mmodelid / 100);				
 				format(string, 64, "%s ~r~(%d)", GetObjectName(mmodelid), PlayerItem[playerid][ItemAmount][i]);
 				PlayerTextDrawSetString(playerid, InventoryText[playerid][i + 48], string);
 				if(IsPlayerInInventory(playerid))
@@ -586,7 +586,7 @@ LoadInventoryPageItems(playerid)
 				GetObjectTXDInfo(mmodelid, color, rx, ry, rz, zoom);
 				PlayerTextDrawColor(playerid, InventoryText[playerid][i], color << 8 | 0xFF);
 				PlayerTextDrawSetPreviewRot(playerid, InventoryText[playerid][i], rx, ry, rz, zoom);
-				PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][i], mmodelid);				
+				PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][i], mmodelid < 20000 ? mmodelid : mmodelid / 100);				
 				format(string, 64, "%s ~r~(%d)", GetObjectName(mmodelid), PlayerItem[playerid][ItemAmount][i + 10]);
 				PlayerTextDrawSetString(playerid, InventoryText[playerid][i + 48], string);
 				if(IsPlayerInInventory(playerid))
@@ -724,6 +724,22 @@ GivePlayerItem(playerid, itemid, modelid, amount, &Float:durability = 100.0, &it
 {
 	if(!CountPlayerFreeSlots(playerid)) return SendInfoText(playerid, "Inventory", "~r~Your bag is full, you can not pickup more items!", 3500);
 	
+	if(IsModelStackable(modelid))
+	{
+		new index = ResearchInventoryItem(playerid, modelid);
+		if(index != -1)
+		{
+			if(PlayerItem[playerid][ItemAmount][index] + amount <= GetObjectMaxStack(modelid))
+			{
+				PlayerItem[playerid][ItemAmount][index] += amount;
+				UpdatePlayerSlot(playerid, index);
+				new query[128];
+				mysql_format(MySQL, query, 128, "UPDATE `items` SET `model` = %d, `owner` = '-1' WHERE `id` = %d", DEFAULT_OBJECT_MODEL, itemid);
+				mysql_tquery(MySQL, query, "", "");				
+				return 1;
+			}
+		}
+	}
 	for(new s; s < 10 * PlayerInfo[playerid][bagtype]; s ++)
 	{
 		if(IsInventorySlotFree(playerid, s))
@@ -759,7 +775,7 @@ UpdatePlayerSlot(playerid, slotid)
 		PlayerTextDrawSetPreviewRot(playerid, InventoryText[playerid][slotid + 20], rx, ry, rz, zoom);					
 				
 		PlayerTextDrawSetString(playerid, InventoryText[playerid][slotid + 68], string);
-		PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][slotid + 20], kmodelid);
+		PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][slotid + 20], kmodelid < 20000 ? kmodelid : kmodelid / 100);
 		PlayerTextDrawShow(playerid, InventoryText[playerid][slotid + 20]);
 		PlayerTextDrawShow(playerid, InventoryText[playerid][slotid + 68]);
 	}
@@ -771,7 +787,7 @@ UpdatePlayerSlot(playerid, slotid)
 		PlayerTextDrawSetPreviewRot(playerid, InventoryText[playerid][slotid + 10], rx, ry, rz, zoom);
 
 		PlayerTextDrawSetString(playerid, InventoryText[playerid][slotid + 58], string);
-		PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][slotid + 10], kmodelid);
+		PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][slotid + 10], kmodelid < 20000 ? kmodelid : kmodelid / 100);
 		PlayerTextDrawShow(playerid, InventoryText[playerid][slotid + 10]);
 		PlayerTextDrawShow(playerid, InventoryText[playerid][slotid + 58]);
 	}
@@ -783,7 +799,7 @@ UpdatePlayerSlot(playerid, slotid)
 		PlayerTextDrawSetPreviewRot(playerid, InventoryText[playerid][slotid], rx, ry, rz, zoom);
 
 		PlayerTextDrawSetString(playerid, InventoryText[playerid][slotid + 48], string);
-		PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][slotid], kmodelid);
+		PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][slotid], kmodelid < 20000 ? kmodelid : kmodelid / 100);
 		PlayerTextDrawShow(playerid, InventoryText[playerid][slotid]);
 		PlayerTextDrawShow(playerid, InventoryText[playerid][slotid + 48]);
 	}
@@ -795,7 +811,7 @@ UpdatePlayerSlot(playerid, slotid)
 		PlayerTextDrawSetPreviewRot(playerid, InventoryText[playerid][slotid - 10], rx, ry, rz, zoom);
 
 		PlayerTextDrawSetString(playerid, InventoryText[playerid][slotid + 38], string);
-		PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][slotid - 10], kmodelid);
+		PlayerTextDrawSetPreviewModel(playerid, InventoryText[playerid][slotid - 10], kmodelid < 20000 ? kmodelid : kmodelid / 100);
 		PlayerTextDrawShow(playerid, InventoryText[playerid][slotid - 10]);
 		PlayerTextDrawShow(playerid, InventoryText[playerid][slotid + 38]);
 	}
@@ -840,18 +856,18 @@ CreatePlayerItem(playerid, model, amount, Float:durability = 100.0, itemtime = 0
 
 CreateDroppedItem(itemid, model, amount, Float:x, Float:y, Float:z, vworld, pinterior, Float:durability = 100.0, itemtime = 0, expirable = 0, bool:use_z_index = false)
 {	
-	new label[50], Float:rx, Float:ry, Float:rz, label_color, Float:label_variance;
+	new label[50], Float:rx, Float:ry, Float:rz, label_color, Float:label_variance, Float:zindexh;
 	label_color = GetObjectColor(model);
-	GetObjectDropData(model, rx, ry, rz, label_variance);
+	GetObjectDropData(model, rx, ry, rz, label_variance, zindexh);
 	if(!use_z_index) CA_FindZ_For2DCoord(x, y, z);
 	format(label, sizeof(label), "Item: {%06x}%s", label_color, GetObjectName(model));
-	DroppedItem[itemid][DItemLabel] = CreateDynamic3DTextLabel(label, 0xFFFFFFFF, x, y, z + 0.3 + label_variance, 12.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, vworld, pinterior);
+	DroppedItem[itemid][DItemLabel] = CreateDynamic3DTextLabel(label, 0xFFFFFFFF, x, y, z + 0.3 + label_variance + zindexh, 12.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, vworld, pinterior);
 	DroppedItem[itemid][DItemModel] = model;
 	DroppedItem[itemid][DItemAmount] = amount;
 	DroppedItem[itemid][DItemPosX] = x;
 	DroppedItem[itemid][DItemPosY] = y;
 	DroppedItem[itemid][DItemPosZ] = z;	
-	DroppedItem[itemid][DItemObj] = CreateDynamicObject(model, x, y, z + 0.1, rx, ry, 0.0, vworld, pinterior);
+	DroppedItem[itemid][DItemObj] = CreateDynamicObject(model < 20000 ? model : model  / 100, x, y, z + 0.1 + zindexh, rx, ry, 0.0, vworld, pinterior);
 	DroppedItem[itemid][DItemDurability] = durability;
 	DroppedItem[itemid][DItemTime] = itemtime;
 	DroppedItem[itemid][DItemExpirable] = expirable;
@@ -863,7 +879,7 @@ CreateDroppedItem(itemid, model, amount, Float:x, Float:y, Float:z, vworld, pint
 	{
 		new txr_lib[32], txr_name[32], matcolor;
 		GetObjectTXRInfo(model, txr_lib, txr_name, matcolor);
-		SetDynamicObjectMaterial(DroppedItem[itemid][DItemObj], 0, model, txr_lib, txr_name, 0xFF << 24 | matcolor);
+		SetDynamicObjectMaterial(DroppedItem[itemid][DItemObj], 0, model < 20000 ? model : model  / 100, txr_lib, txr_name, 0xFF << 24 | matcolor);
 	}
 	return 1;
 }
@@ -1001,7 +1017,7 @@ CheckBrokenItems(playerid)
 
 DropPlayerItem(playerid, itemid,  model, amount, Float:durability = 100.0, itemtime = 0, expirable = 0)
 {
-	new label[256], vworld, pinterior, Float:rx, Float:ry, Float:rz, Float:x, Float:y, Float:z, Float:cx, Float:cy, Float:cz, color, Float:diff, Float:diff2, Float:variation, Float:label_variance;
+	new label[256], vworld, pinterior, Float:rx, Float:ry, Float:rz, Float:x, Float:y, Float:z, Float:cx, Float:cy, Float:cz, color, Float:diff, Float:diff2, Float:variation, Float:label_variance, Float:zindexh;
 	MRandFloatRange(-0.7, 0.7, diff);
 	MRandFloatRange(-0.5, 0.5, diff2);
 	MRandFloatRange(0.1, 1.2, variation);
@@ -1012,19 +1028,19 @@ DropPlayerItem(playerid, itemid,  model, amount, Float:durability = 100.0, itemt
 
 	if(z > cz) z = cz - 0.9;
 
-	GetObjectDropData(model, rx, ry, rz, label_variance);
+	GetObjectDropData(model, rx, ry, rz, label_variance, zindexh);
 	color = GetObjectColor(model);
 	vworld = GetPlayerVirtualWorld(playerid);
 	pinterior = GetPlayerInterior(playerid);
 	format(label, 32, "Item: {%06x}%s", color, GetObjectName(model));	
 	
-	DroppedItem[itemid][DItemLabel] = CreateDynamic3DTextLabel(label, 0xFFFFFFFFF, x + diff + diff2, y + diff + diff2, z + 0.3 + label_variance, 12.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, vworld, pinterior);
+	DroppedItem[itemid][DItemLabel] = CreateDynamic3DTextLabel(label, 0xFFFFFFFFF, x + diff + diff2, y + diff + diff2, z + 0.3 + label_variance + zindexh, 12.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, vworld, pinterior);
 	DroppedItem[itemid][DItemModel] = model;
 	DroppedItem[itemid][DItemAmount] = amount;
 	DroppedItem[itemid][DItemPosX] = x + diff + diff2;
 	DroppedItem[itemid][DItemPosY] = y + diff + diff2;
 	DroppedItem[itemid][DItemPosZ] = z + 0.1;	
-	DroppedItem[itemid][DItemObj] = CreateDynamicObject(model, x + diff + diff2, y + diff + diff2, z + 0.1, rx, ry, 0.0, vworld, pinterior);
+	DroppedItem[itemid][DItemObj] = CreateDynamicObject(model < 20000 ? model : model / 100, x + diff + diff2, y + diff + diff2, z + 0.1 + zindexh, rx, ry, 0.0, vworld, pinterior);
 	DroppedItem[itemid][DItemDurability] = durability;
 	DroppedItem[itemid][DItemTime] = itemtime;
 	DroppedItem[itemid][DItemExpirable] = expirable;
@@ -1034,7 +1050,7 @@ DropPlayerItem(playerid, itemid,  model, amount, Float:durability = 100.0, itemt
 	{
 		new txr_lib[32], txr_name[32], matcolor;
 		GetObjectTXRInfo(model, txr_lib, txr_name, matcolor);
-		SetDynamicObjectMaterial(DroppedItem[itemid][DItemObj], 0, model, txr_lib, txr_name, 0xFF << 24 | matcolor);
+		SetDynamicObjectMaterial(DroppedItem[itemid][DItemObj], 0, model < 20000 ? model : model  / 100, txr_lib, txr_name, 0xFF << 24 | matcolor);
 	}
 	mysql_format(MySQL, label, sizeof(label), "UPDATE `items` SET `owner` = '-1', `coord_x` = '%f', `coord_y` = '%f', `coord_z` = '%f', `world` = '%d', `interior` = '%d',  `durability` = '%f', `time` = '%d', `expirable` = '%d' WHERE `id` = '%d'", x + diff + diff2, y + diff + diff2, z + 0.2, vworld, pinterior, durability, itemtime, expirable, itemid);
 	mysql_tquery(MySQL, label, "", "");
@@ -1103,7 +1119,7 @@ OnPlayerEquipItem(playerid, slotid, itemid, model, amount, Float:durability, tim
 	if(slotid == 8) return SetPlayerBagType(playerid, GetBagTypeFromModel(model), itemid, model, durability, time, expirable, true);
 	if(model == DEFAULT_OBJECT_MODEL) return SendClientMessage(playerid, 0xFF0000FF, "Error: invalid model id while loading equipped item!");
 	if(slotid != GetEquipableModelType(model)) return SendClientMessage(playerid, 0xFF0000FF, "Error: invalid slot while loading equipped item!");
-	if(slotid > 1 && PlayerEquippedItem[playerid][EItemID][slotid]) return SendInfoText(playerid, "Inventory", "]There is already a weapon equipped, you must unequip it before equip another one.", 3500);	
+	if(slotid > 1 && PlayerEquippedItem[playerid][EItemID][slotid]) return SendInfoText(playerid, "Inventory", "Error: There is already a weapon equipped, you must unequip it before equip another one.", 3500);	
 	//filter items data
 	switch(slotid)
 	{
@@ -1111,38 +1127,81 @@ OnPlayerEquipItem(playerid, slotid, itemid, model, amount, Float:durability, tim
 		case -1:
 		{
 			new slot = GetAmmoEquipableSlot(model);
+			if(PlayerEquippedItem[playerid][EItemAmount][slot] >= MAX_WEAPON_AMMO) return SendInfoText(playerid, "Inventory", "This weapon has too much ammo.", 3000);
 		
+			if(PlayerEquippedItem[playerid][EItemAmount][slot] + amount > MAX_WEAPON_AMMO)
+			{
+				new iTot = 1000 - PlayerEquippedItem[playerid][EItemAmount][slot];
+				new iLeft = amount - iTot;
+
+				PlayerEquippedItem[playerid][EItemAmount][slot] = MAX_WEAPON_AMMO;
+				SetPlayerAmmo(playerid, GetWeaponFromModel(PlayerEquippedItem[playerid][EItemModel][slot]), PlayerEquippedItem[playerid][EItemAmount][slot]);
+				LoadInventoryEquippedItems(playerid);
+				for(new x; x < 10 * PlayerInfo[playerid][bagtype]; x++)
+				{
+					if(PlayerItem[playerid][ItemID][x] == itemid)
+					{
+						PlayerItem[playerid][ItemAmount][x] = iLeft;
+						UpdatePlayerSlot(playerid, x);
+						return 1;
+					}
+				}
+			}
+			else
+			{
+				DestroyPlayerItem(playerid, itemid);
+				PlayerEquippedItem[playerid][EItemAmount][slot] += amount;
+			}
 			if(!IsAmmoFromWeapon(model, PlayerEquippedItem[playerid][EItemModel][slot])) return SendInfoText(playerid, "Inventory", "Ammo type different from equiped weapon!", 3500);
 			PlayerPlaySound(playerid, 1150, 0,0,0);	
-			PlayerEquippedItem[playerid][EItemAmount][slot] += amount;
+			
 			SetPlayerAmmo(playerid, GetWeaponFromModel(PlayerEquippedItem[playerid][EItemModel][slot]), PlayerEquippedItem[playerid][EItemAmount][slot]);
-			DestroyPlayerItem(playerid, itemid);
 			return LoadInventoryEquippedItems(playerid);
 		}
 		//case primary or secondary
 		case 0, 1:
 		{
 			//check if uses the same type of ammo
-			if(PlayerEquippedItem[playerid][EItemID][slotid] && GetAmmoFromWeaponModel(model) == GetAmmoFromWeaponModel(PlayerEquippedItem[playerid][EItemModel][slotid]) && !loaded)
+			if(PlayerEquippedItem[playerid][EItemModel] != DEFAULT_OBJECT_MODEL && PlayerEquippedItem[playerid][EItemID][slotid] && GetAmmoFromWeaponModel(model) == GetAmmoFromWeaponModel(PlayerEquippedItem[playerid][EItemModel][slotid]) && !loaded)
 			{
 				if(amount)
 				{
 					PlayerPlaySound(playerid, 1150, 0,0,0);
-					
-					PlayerEquippedItem[playerid][EItemAmount][slotid] += amount;
-					SetPlayerAmmo(playerid, GetWeaponFromModel(PlayerEquippedItem[playerid][EItemModel][slotid]), PlayerEquippedItem[playerid][EItemAmount][slotid]);
-					for(new s; s < 10 * PlayerInfo[playerid][bagtype]; s++)
+					//check for ammo limit
+					if(PlayerEquippedItem[playerid][EItemAmount][slotid] + amount > MAX_WEAPON_AMMO)
 					{
-						if(PlayerItem[playerid][ItemID][s] == itemid)
+						if(PlayerEquippedItem[playerid][EItemAmount][slotid] >= MAX_WEAPON_AMMO) return SendInfoText(playerid, "Inventory", "This weapon has too much ammo.", 3000);
+					
+						new iTot = 1000 - PlayerEquippedItem[playerid][EItemAmount][slotid];
+						new iLeft = amount - iTot;
+
+						PlayerEquippedItem[playerid][EItemAmount][slotid] = MAX_WEAPON_AMMO;
+						SetPlayerAmmo(playerid, GetWeaponFromModel(PlayerEquippedItem[playerid][EItemModel][slotid]), PlayerEquippedItem[playerid][EItemAmount][slotid]);
+						LoadInventoryEquippedItems(playerid);
+						for(new x; x < 10 * PlayerInfo[playerid][bagtype]; x++)
 						{
-							PlayerItem[playerid][ItemAmount][s] = 0;
-							if(IsPlayerInInventory(playerid))
+							if(PlayerItem[playerid][ItemID][x] == itemid)
 							{
-								LoadInventoryEquippedItems(playerid);
-								LoadInventoryPageItems(playerid);
+								PlayerItem[playerid][ItemAmount][x] = iLeft;
+								UpdatePlayerSlot(playerid, x);
+								return 1;
 							}
-							return 1;
 						}
+					}
+					else
+					{
+						for(new x; x < 10 * PlayerInfo[playerid][bagtype]; x++)
+						{
+							if(PlayerItem[playerid][ItemID][x] == itemid)
+							{
+								PlayerItem[playerid][ItemAmount][x] = 0;
+								UpdatePlayerSlot(playerid, x);
+							}
+						}
+						PlayerEquippedItem[playerid][EItemAmount][slotid] += amount;
+						SetPlayerAmmo(playerid, GetWeaponFromModel(PlayerEquippedItem[playerid][EItemModel][slotid]), PlayerEquippedItem[playerid][EItemAmount][slotid]);
+						LoadInventoryEquippedItems(playerid);
+						return 1;
 					}
 				}
 				else return SendInfoText(playerid, "Inventory", "This weapon has no ammo left to equip!", 3500);
@@ -1513,5 +1572,14 @@ ResetDroppedObjects()
 public OnDroppedItemsReset()
 {
 	print("Server dropped objects cleared...\nGenerating drop rates...");
-	GenerateDropRateObjects();
+	RegenerateLoots();
+}
+
+
+ResearchInventoryItem(playerid, modelid)
+{
+	for(new i; i < 10 * PlayerInfo[playerid][bagtype]; i++)
+		if(PlayerItem[playerid][ItemID][i] && PlayerItem[playerid][ItemModel][i] == modelid) return i;
+
+	return -1;
 }
