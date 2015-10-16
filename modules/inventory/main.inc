@@ -1118,7 +1118,7 @@ OnPlayerEquipItem(playerid, slotid, itemid, model, amount, Float:durability, tim
 	if(UnableToEquip[playerid] && !loaded) return 0;
 	if(slotid == 8) 
 	{
-		if(PlayerInfo[playerid][bagtype] < 2) SetPlayerBagType(playerid, GetBagTypeFromModel(model), itemid, model, PlayerItem[playerid][ItemDurability][slotid], PlayerItem[playerid][ItemTime][slotid], PlayerItem[playerid][ItemExpirable][slotid], false); 
+		if(PlayerInfo[playerid][bagtype] < 2 || loaded) SetPlayerBagType(playerid, GetBagTypeFromModel(model), itemid, model, PlayerItem[playerid][ItemDurability][slotid], PlayerItem[playerid][ItemTime][slotid], PlayerItem[playerid][ItemExpirable][slotid], false); 
 			else return SendInfoText(playerid, "Inventory", "You already have a backpack in use, remove it before using another one.", 3000);
 		return DestroyPlayerItem(playerid, itemid);
 	}
