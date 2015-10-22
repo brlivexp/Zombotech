@@ -1,9 +1,10 @@
 #include <a_npc>
 /*
 	RNPC NPC script
-	Version 0.3 	@ 13.7.2012
-	Version 0.3.3 	@ 24.5.2014
-	Version 0.4		@ 26.6.2014
+	Version 0.3 	@ 13.07.2012
+	Version 0.3.3 	@ 24.05.2014
+	Version 0.4		@ 26.06.2014
+	Version 0.4.1	@ 03.12.2014
 	Mauzen
 	
 	Communication codes:
@@ -36,8 +37,10 @@
 
 */
 
+//#define FILESAFE_MODE	// Adds a filecheck before starting playback. This is slow on slow HDDs, so only use it if youre experiencing NPC crashes
+
 // Buildnumber of this NPC script, should match the number of the RNPC include
-#define RNPC_SCRIPT_VERSION			"12"
+#define RNPC_SCRIPT_VERSION			"14"
 
 // Identify messages as RNPC commands
 // (alternative communication protocol for future versions)
@@ -118,6 +121,9 @@ public OnRecordingPlaybackEnd()
 
 public OnClientMessage(color, text[])
 {
+	// Fix zero-length fake commands
+	if (strlen(text) == 0) return;
+
 	// Only accept these if the NPC is not marked dead
 	if (!dead) {	
 	
@@ -126,6 +132,15 @@ public OnClientMessage(color, text[])
 			new slot = strval(text[9]);
 			new rec[12];
 			format(curplayback, 32, "rnpc%03d-%02d", npcid, slot);
+			
+			#if defined FILESAFE_MODE
+				if (!fexist(curplayback)) {				
+					new txt[64];
+					format(txt, sizeof(txt), "RNPC %d: target file %s does not exist. CMD:%s", npcid, curplayback, text);
+					SendChat(txt);
+					return;
+				}
+			#endif
 			
 			StopRecordingPlayback();
 			if (vehicle) {
@@ -148,6 +163,16 @@ public OnClientMessage(color, text[])
 			if (strfind(curplayback, ".rec", true) > -1) {
 				strmid(curplayback, curplayback, 0, strlen(curplayback) - 4);
 			}
+			
+			#if defined FILESAFE_MODE
+				if (!fexist(curplayback)) {				
+					new txt[64];
+					format(txt, sizeof(txt), "RNPC %d: target file %s does not exist. CMD:%s", npcid, curplayback, text);
+					SendChat(txt);
+					return;
+				}
+			#endif
+			
 			StopRecordingPlayback();
 			if (vehicle) {
 				StartRecordingPlayback(PLAYER_RECORDING_TYPE_DRIVER, curplayback);

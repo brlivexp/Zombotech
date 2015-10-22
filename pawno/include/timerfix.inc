@@ -9,7 +9,7 @@
 #endif
  
 #if !defined TIMER_FIX_TIMER_SLOTS
-        #define TIMER_FIX_TIMER_SLOTS  128
+        #define TIMER_FIX_TIMER_SLOTS  256
 #endif
  
 #if !defined TIMER_FIX_MAX_ARGUMENTS

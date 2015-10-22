@@ -1,9 +1,11 @@
+#define ZOMBIE_STATUS_NONE -1
 #define ZOMBIE_STATUS_STOPPED 0
 #define ZOMBIE_STATUS_ROAMING 1
 #define ZOMBIE_STATUS_FOLLOWING 2
 #define ZOMBIE_STATUS_BLOCKED 3
-#define ZOMBIE_STATUS_BITING 4 //Biting dead bodies
+#define ZOMBIE_STATUS_BITING 4 
 #define ZOMBIE_STATUS_DEAD 5
+#define ZOMBIE_STATUS_CALCULATING 6
 
 #define ZOMBIE_TYPE_INVALID 0
 #define ZOMBIE_TYPE_CIVILIAN 1
@@ -12,8 +14,10 @@
 #define ZOMBIE_TYPE_FIREFIGHTER 4
 #define ZOMBIE_TYPE_HOMELESS 5
 
+#define COLLISION_TYPE_STUMBLE 0
+#define COLLISION_TYPE_STOP 1
 
-#define MAX_ZOMBIES 100
+#define MAX_ZOMBIES (10)
 #define MAX_ATTACHMENTS 10
 #define MAX_SKINS 	211
 
@@ -35,7 +39,7 @@ enum ZombieClassData
 	Float:DefaultResistance,
 	Float:DefaultMaxLeapHeight,
 	Float:DefaultDetectionRadius,
-	Float:DeafultMoveSpeed,
+	Float:DefaultMoveSpeed,
 	bool:HasExtraAttachments
 };
 new ZombieClassInfo[MAX_SKINS][ZombieClassData];
@@ -78,11 +82,13 @@ enum ZombiesData
 	zombie_targetplayer,
 	zombie_target_body,//used for dead bodies
 	Float:zombie_follow_vector[3],
-	bool:playerstreamed[MAX_PLAYERS]
+	bool:playerstreamed[MAX_PLAYERS],
+	Float:zombie_collision_vector[3],
+	zombie_collision_type
 };
-new ZombieInfo[][ZombiesData];
+new ZombieInfo[MAX_ZOMBIES][ZombiesData];
 
-stock LoadZombieSkins()
+LoadZombieSkins()
 {	
 	//skin 4
 	SetupZombieSkinData(4, 0, 3003, 2, 0.119032, 0.077540, -0.035783, 0.000000, 0.000000, 0.000000, 0.400000, 0.400000, 0.400000, 0xFFFFFF, 0xFFFFFF);
@@ -112,14 +118,14 @@ stock LoadZombieSkins()
 
 
 
-stock LoadZombiesClasses()
+LoadZombiesClasses()
 {
 	SetupZombiesClass(4, ZOMBIE_TYPE_HOMELESS, 80.0, 0.0, 35.0, 15.0, 5.0, 1.2, 40.0, MOVE_SPEED_RUN, false);
 	SetupZombiesClass(162, ZOMBIE_TYPE_HOMELESS, 80.0, 0.0, 35.0, 15.0, 5.0, 1.2, 40.0, MOVE_SPEED_RUN, false);
 	return 1;
 }
 
-stock SetupZombieSkinData(skinid, index, model, bone, Float:PosX, Float:PosY, Float:PosZ, Float:RotX, Float:RotY, Float:RotZ, Float:SizeX, Float:SizeY, Float:SizeZ, color1, color2)
+SetupZombieSkinData(skinid, index, model, bone, Float:PosX, Float:PosY, Float:PosZ, Float:RotX, Float:RotY, Float:RotZ, Float:SizeX, Float:SizeY, Float:SizeZ, color1, color2)
 {
 	AttachmentSkinInfo[skinid][index][AttachmentModel] = model;
 	AttachmentSkinInfo[skinid][index][AttachmentBone] = bone;
@@ -137,7 +143,7 @@ stock SetupZombieSkinData(skinid, index, model, bone, Float:PosX, Float:PosY, Fl
 	return 1;
 }
 
-stock SetupZombiesClass(skinid, classid, Float:Health, Float:Armour, Float:MaxDamage, Float:MinDamage, Float:Resistance, Float:MaxLeapHeight, Float:DetectionRadius, Float:MoveSpeed, bool:ExtraAttachments)
+SetupZombiesClass(skinid, classid, Float:Health, Float:Armour, Float:MaxDamage, Float:MinDamage, Float:Resistance, Float:MaxLeapHeight, Float:DetectionRadius, Float:MoveSpeed, bool:ExtraAttachments)
 {
 	ZombieClassInfo[skinid][ZombieTypeID] = classid;
 	ZombieClassInfo[skinid][DefaultHealth] = Health;
@@ -147,12 +153,12 @@ stock SetupZombiesClass(skinid, classid, Float:Health, Float:Armour, Float:MaxDa
 	ZombieClassInfo[skinid][DefaultResistance] = Resistance;
 	ZombieClassInfo[skinid][DefaultMaxLeapHeight] = MaxLeapHeight;
 	ZombieClassInfo[skinid][DefaultDetectionRadius] = DetectionRadius;
-	ZombieClassInfo[skinid][DeafultMoveSpeed] = MoveSpeed;
+	ZombieClassInfo[skinid][DefaultMoveSpeed] = MoveSpeed;
 	ZombieClassInfo[skinid][HasExtraAttachments] = ExtraAttachments;
 	return 1;
 }
 
-stock bool:IsValidZombieSkin(skinid)
+bool:IsValidZombieSkin(skinid)
 {
 	if(ZombieClassInfo[skinid][ZombieTypeID] == ZOMBIE_TYPE_INVALID) return false;
 	return true;

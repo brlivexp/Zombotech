@@ -122,7 +122,7 @@ PlayerFileSave(playerid)
 	GetPlayerArmour(playerid, PlayerInfo[playerid][kevlar]);
 
 	new query[1536];
-	mysql_format(MySQL, query, 1024, "UPDATE `users` SET `adminlevel` = %d, `kills` = %d, `deaths` = %d, `zombiekills` = %d, `level` = %d, `experience` = %d, `health` = '%f', `kevlar`= '%f', `pos_x` = %f, `pos_y` = %f, `pos_z` = %f, `pos_a` = %f, `virtualworld` = %d, `interior` = %d, `lastlogin` = %d, `vipcoins` = %d, `bagtype` = %d WHERE `id` = %d;",
+	mysql_format(MySQL, query, sizeof(query), "UPDATE `users` SET `adminlevel` = %d, `kills` = %d, `deaths` = %d, `zombiekills` = %d, `level` = %d, `experience` = %d, `health` = '%f', `kevlar`= '%f', `pos_x` = %f, `pos_y` = %f, `pos_z` = %f, `pos_a` = %f, `virtualworld` = %d, `interior` = %d, `lastlogin` = %d, `vipcoins` = %d, `bagtype` = %d WHERE `id` = %d;",
 	PlayerInfo[playerid][adminlevel],
 	PlayerInfo[playerid][kills],
 	PlayerInfo[playerid][deaths],
@@ -151,7 +151,10 @@ PlayerFileSave(playerid)
 
 LoadPlayerSavedData(playerid)
 {
-	SetPlayerPos(playerid, PlayerInfo[playerid][pos_x], PlayerInfo[playerid][pos_y], PlayerInfo[playerid][pos_z]);
+	if(PlayerInfo[playerid][pos_x] == 0.0 && PlayerInfo[playerid][pos_y] == 0.0 && PlayerInfo[playerid][pos_z] == 0.0)
+		SetPlayerPos(playerid, proxSpawn[playerid][0],proxSpawn[playerid][1],proxSpawn[playerid][2]+1.0);	
+	else SetPlayerPos(playerid, PlayerInfo[playerid][pos_x], PlayerInfo[playerid][pos_y], PlayerInfo[playerid][pos_z]);
+	
 	SetPlayerFacingAngle(playerid, PlayerInfo[playerid][pos_a]);
 	SetPlayerVirtualWorld(playerid, PlayerInfo[playerid][virtualworld]);
 	SetPlayerInterior(playerid, PlayerInfo[playerid][interior]);

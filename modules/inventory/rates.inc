@@ -77,7 +77,8 @@ stock RegenerateLoots()
 		}
 		
 	}
-	return print("Loots sucessfully generated...");
+	print("Loots sucessfully generated...");
+	return 1;
 }
 
 

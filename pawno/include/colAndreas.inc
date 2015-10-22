@@ -513,3 +513,23 @@ public OnGameModeExit()
 #define OnGameModeExit CA_OnGameModeExit
 
 forward CA_OnGameModeExit();
+
+stock Float:CA_GetPlayerObstacleHeight(playerid, Float:tX, Float:tY, Float:tZ, &Float:MAX_OBSTACLE_HEIGHT = 100.0)
+{
+	new Float:x, Float:y, Float:z, Float:eX, Float:eY, Float:eZ;
+	GetPlayerPos(playerid, x, y, z);
+	CA_RayCastLine(x, y, z, tX, tY, tZ, eX, eY, eZ);
+
+	//if path colides at some point the final angle will probably
+	if(eX == 0.0 || eY == 0.0) return 0.0;
+    else
+	{
+		for(new Float:d; d < MAX_OBSTACLE_HEIGHT; d += 0.1)
+		{
+			static Float:fZ;
+			CA_RayCastLine(x, y, eZ + d, tX, tY, tZ, eX, eY, fZ);
+			if(!eX && !eY) return fZ;
+		}
+	}
+	return 0.0;
+}

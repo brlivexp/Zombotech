@@ -1,6 +1,32 @@
-/*********************************************************************************************************/
-/*                                       MAIN INCLUDES                                                   */
-/*********************************************************************************************************/
+/*##################################################################################################################
+								..::::: Zombotech Apocalypse Server :::::..
+####################################################################################################################
+		──────────────────────────────────────────────────────────────────────────────────────────
+		─██████████████████─██████████████─██████──────────██████─██████████████───██████████████─
+		─██░░░░░░░░░░░░░░██─██░░░░░░░░░░██─██░░██████████████░░██─██░░░░░░░░░░██───██░░░░░░░░░░██─
+		─████████████░░░░██─██░░██████░░██─██░░░░░░░░░░░░░░░░░░██─██░░██████░░██───██░░██████░░██─
+		─────────████░░████─██░░██──██░░██─██░░██████░░██████░░██─██░░██──██░░██───██░░██──██░░██─
+		───────████░░████───██░░██──██░░██─██░░██──██░░██──██░░██─██░░██████░░████─██░░██──██░░██─
+		─────████░░████─────██░░██──██░░██─██░░██──██░░██──██░░██─██░░░░░░░░░░░░██─██░░██──██░░██─
+		───████░░████───────██░░██──██░░██─██░░██──██████──██░░██─██░░████████░░██─██░░██──██░░██─
+		─████░░████─────────██░░██──██░░██─██░░██──────────██░░██─██░░██────██░░██─██░░██──██░░██─
+		─██░░░░████████████─██░░██████░░██─██░░██──────────██░░██─██░░████████░░██─██░░██████░░██─
+		─██░░░░░░░░░░░░░░██─██░░░░░░░░░░██─██░░██──────────██░░██─██░░░░░░░░░░░░██─██░░░░░░░░░░██─
+		─██████████████████─██████████████─██████──────────██████─████████████████─██████████████─
+		──────────────────────────────────────────────────────────────────────────────────────────
+####################################################################################################################
+[*] File: zombo.pwn 
+####################################################################################################################																					 
+[*] Description: Main gamemode file
+
+
+####################################################################################################################				                                                                      
+[*] Author: n0minal	
+####################################################################################################################
+[*] Notes: -
+
+
+####################################################################################################################*/
 #include <a_samp>
 #include <colAndreas>
 #include <a_mysql>
@@ -12,15 +38,12 @@
 #include <ibranch>
 #include <iCMD>
 #include <cstl>
-//#include <route>
 #include <rnpc>
 #include <mrandom>
-//#include <timerfix>
-
 /*********************************************************************************************************/
 /*                                       SERVER DEFINES                                                  */
 /*********************************************************************************************************/
-#define DEV_VERSION 		"gamemodetext ..:Dev 0.1.1b R3:.."
+#define DEV_VERSION 		"gamemodetext ..:Dev 0.1.1c R1:.."
 #define MAX_SPAWNS 			(06000)
 #define gSpawns				0xF40F4
 #define fp%0(%1)			forward %0(%1); public %0(%1)
@@ -38,9 +61,6 @@ new szStrsPrintf[1024];
 /*********************************************************************************************************/
 /*                                       SERVER INCLUDES                                                 */
 /*********************************************************************************************************/
-//updated//
-
-
 #include "../modules/server/utils.inc"
 #include "../modules/sqlite/utils.inc"
 #include "../modules/player/spawns.inc"
@@ -62,7 +82,7 @@ new szStrsPrintf[1024];
 #include "../modules/menu/main.inc"
 #include "../modules/player/class.inc"
 #include "../modules/actors/bodies.inc"
-#include "../modules/player/anims.inc"//preload
+#include "../modules/player/anims.inc"
 #include "../modules/npcs/zombies.inc"
 #include "../modules/server/commands.inc"
 /*********************************************************************************************************/
@@ -71,16 +91,14 @@ new szStrsPrintf[1024];
 
 #pragma dynamic 30000
 
-main()
-{
-	
-}
+main( ) { }
 
 
 public OnGameModeInit()
 {
 
 	CA_Init();
+	MapAndreas_Init(MAP_ANDREAS_MODE_FULL);
     UsePlayerPedAnims();
    	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, 999);
 	
@@ -141,10 +159,11 @@ public OnGameModeInit()
 	LoadMaps();
 
 	print("-------------------------------------");
-	print("Loading zombies...");
+	print("Loading zombies data...");
 	print("-------------------------------------");
 	LoadZombieSkins();
-	//GenerateZombies();
+	LoadZombiesClasses();
+	
     
     print("-------------------------------------");
     print("Loading server utils...");
@@ -171,6 +190,11 @@ public OnGameModeInit()
 	print("-------------------------------------");
 	LoadServerTextDraws();
 
+	
+	print("-------------------------------------");
+	print("Generating zombies...");
+	print("-------------------------------------");
+	GenerateZombies();
 	return true;
 }
 
@@ -182,8 +206,13 @@ public OnGameModeExit()
 
 public OnPlayerConnect(playerid)
 {	
+	GetVectorPath(gSpawns, MRandom(MAX_SPAWNS), proxSpawn[playerid][0], proxSpawn[playerid][1], proxSpawn[playerid][2]);
+
 	if(!IsPlayerNPC(playerid))
 	{
+		new str[24];
+		format(str, 24, "[ZT]Guest_User[%d]", playerid);
+		SetPlayerName(playerid, str);
 		PreloadAnimations(playerid);
 		PlayerLoginInfo[playerid][FirstSpawn] = true;
    		ResetInventoryInfo(playerid);
@@ -195,15 +224,12 @@ public OnPlayerConnect(playerid)
 	    ResetInventoryInfo(playerid);
 	    CleanPlayerLoginData(playerid);
 	    ResetPlayerAttachments(playerid);
-		SetTimerEx("OnPlayerConnected", 1000, false, "i", playerid);
+		SetTimerEx("OnPlayerConnected", 100, false, "i", playerid);
 		EnablePlayerCameraTarget(playerid, 1);		
 	}
 	else
-	{
-		OnZombieConnect(playerid);
 		OnPlayerSpawn(playerid);
-	}
-	GetVectorPath(gSpawns, MRandom(MAX_SPAWNS), proxSpawn[playerid][0], proxSpawn[playerid][1], proxSpawn[playerid][2]);
+
 	return true;
 }
 
@@ -229,7 +255,7 @@ fp OnPlayerConnected(playerid)
 fp OnPlayerInterpolate(playerid)
 {
 	ShowPlayerMainMenu(playerid);	
-	PlayerUpdateTimer[playerid] = SetTimerEx("OnPlayerUpdateEx", 100, true, "i", playerid);
+	PlayerUpdateTimer[playerid] = SetTimerEx("OnPlayerUpdateEx", 300, true, "i", playerid);
 	return true;
 }
 
@@ -542,7 +568,14 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 	if(clickedid == LoginScreenStatic[22] || clickedid == RegisterScreenStatic[25] || clickedid == CreditScreenStatic[20]) OnPlayerSelectMenuOption(playerid, 5);
 	if(clickedid == RegisterScreenStatic[22])
 	{
-		if(3 > strlen(PlayerLoginInfo[playerid][PlayerRegisterName]) > 17 || 3 > strlen(PlayerLoginInfo[playerid][PlayerRegisterPassword]) > 16 || 3 > strlen(PlayerLoginInfo[playerid][PlayerRegisterRePassword]) > 16 || 6 > strlen(PlayerLoginInfo[playerid][PlayerRegisterMail]) > 32)	return SendInfoText(playerid, "Registration Failure", "You left some empty field, complete the fields with your information to proceed with your registration!", 4000);
+		if(3 > strlen(PlayerLoginInfo[playerid][PlayerRegisterName]) || 
+		strlen(PlayerLoginInfo[playerid][PlayerRegisterName]) > 17 ||
+		3 > strlen(PlayerLoginInfo[playerid][PlayerRegisterPassword]) ||
+		strlen(PlayerLoginInfo[playerid][PlayerRegisterPassword]) > 16 ||
+		3 > strlen(PlayerLoginInfo[playerid][PlayerRegisterRePassword]) ||
+		strlen(PlayerLoginInfo[playerid][PlayerRegisterRePassword]) > 16 ||
+		6 > strlen(PlayerLoginInfo[playerid][PlayerRegisterMail]) ||
+		strlen(PlayerLoginInfo[playerid][PlayerRegisterMail]) > 32)	return SendInfoText(playerid, "Registration Failure", "You left some empty field, complete the fields with your information to proceed with your registration!", 4000);
 			
 		if(strcmp(PlayerLoginInfo[playerid][PlayerRegisterPassword], PlayerLoginInfo[playerid][PlayerRegisterRePassword]))
 			return SendInfoText(playerid, "Registration Failure", "The inputted passwords doesn't match, please check your password to continue!", 6000);
@@ -556,12 +589,14 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 			SendInfoText(playerid, "Registration Failure", "There is already an account with this nickname, please, choose a different name and try again!", 6000);
 			return cache_delete(result);
 		}
+		cache_delete(result);
+
 		new HashedPass[32];
 		SHA256_PassHash(PlayerLoginInfo[playerid][PlayerRegisterRePassword], "ztah", HashedPass, sizeof HashedPass);
 		
 		mysql_format(MySQL, query, 256, "INSERT INTO `users` VALUES (NULL, '%s', '%s', '%s',   '0',  '0',  '0',  '0',  '0',  '0',  '100',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1');", PlayerLoginInfo[playerid][PlayerRegisterName], HashedPass, PlayerLoginInfo[playerid][PlayerRegisterMail]);
 		mysql_tquery(MySQL, query, "OnPlayerRegister", "i", playerid);
-		return cache_delete(result);
+		return 1;
 	}
 	return 1;
 }

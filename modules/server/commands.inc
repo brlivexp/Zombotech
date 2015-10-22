@@ -19,6 +19,16 @@ public OnCommandCalled(playerid, params[])
 		SetPlayerPos(playerid, P[0] - 2.5, P[1] + 2.5, P[2] + 0.4);
 		return 1;
 	}
+	get_cmd_params(bring)
+	{
+		if(!IsPlayerAdmin(playerid)) return 0;
+		new ped;
+		if(sscanf(params, "d", ped)) return SendClientMessage(playerid, -1, "usage: /bring [id]");
+		new Float:P[3];
+		GetPlayerPos(playerid, P[0], P[1], P[2]);
+		SetPlayerPos(ped, P[0] - 1.5, P[1] + 1.5, P[2] + 0.4);
+		return 1;
+	}
 	get_cmd_params(grenade)
 	{
 		CreatePlayerItem(playerid, 342, 1, 100.0, 0, 0);

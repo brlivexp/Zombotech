@@ -1,11 +1,11 @@
 /**
  *	RNPC - Recordfile NPCs
- *  Version 0.3.4
- *	made by Mauzen, parts based on Joe Staffs code
+ *  Version 0.4.1
+ *	made by Mauzen
  */
-#define RNPC_VERSION					"0.4"
-#define RNPC_BUILD						12
-#define RNPC_DATE						"26.06.2014"
+#define RNPC_VERSION					"0.4.1"
+#define RNPC_BUILD						14
+#define RNPC_DATE						"03.12.2014"
 #define RNPC_VERSION_DLPAGE				"www.mauzen.org/rnpc"
 #define RNPC_VERSION_STARTURL			"www.mauzen.org/rnpc/rnpc_start.php"
 #define RNPC_VERSION_UPDATEURL			"www.mauzen.org/rnpc/rnpc_update.php"
@@ -39,12 +39,20 @@
 // Adjustable stuff
 #define RNPC_VEHICLE_DMG_MOD				(160.0)  // velocity * this value = vehicle hit damage
 
+
+// AddPause compatibility mode
+#if defined RNPC_PAUSE_REALTIME
+	#define RNPC_PAUSE_COMP 0
+#else
+	#define RNPC_PAUSE_COMP 1
+#endif
+
 // @since 0.2
 native RNPC_CreateBuild(npcid, type, slot=0);
 native RNPC_FinishBuild(clear=1);
 native RNPC_AddMovement(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2, Float:speed=RNPC_SPEED_RUN, use_zmap=0);
 native RNPC_ConcatMovement(Float:x, Float:y, Float:z, Float:speed=RNPC_SPEED_RUN, use_zmap=0);
-native RNPC_AddPause(time);
+native RNPC_AddPause(time, comp=RNPC_PAUSE_COMP);
 
 native RNPC_SetUpdateRate(rate);
 
@@ -431,6 +439,9 @@ public ResetVehicleHit(npcid) {
 
 		return 1;
 	}
+	
+	// Ignore other unhandled RNPC messages
+	if (!strcmp("RNPC:", cmdtext, true, 5)) return 1;
 	
 	return CallLocalFunction(OPCT_HOOKNAME, "is", playerid, cmdtext);
 }
