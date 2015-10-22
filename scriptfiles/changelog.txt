@@ -610,9 +610,14 @@ Alterado:
 
 -------------------------------------------------------------------------------------------------------:
 
-(Segunda-feira): 18/10/2015
+(Terça-feira): 20/10/2015 [versão 0.1.1c R1]
+
+Adcionado:
+-Base de conexão e carregamento de dados de zumbis 
+-Base de perseguição zumbi
+-Importado pathfinder by pamdex
 
 Alterado:
--Atualizado plugin crashdetect (versão antiga causava fake warnings)
+-Plugin RNPC e merrandom atualizados
 
 -------------------------------------------------------------------------------------------------------:
