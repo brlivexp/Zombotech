@@ -621,3 +621,20 @@ Alterado:
 -Plugin RNPC e merrandom atualizados
 
 -------------------------------------------------------------------------------------------------------:
+
+(Terça-feira ~ Quinta-feira): 20/10 ~ 23/10
+
+Adcionado:
+-Plugin FCNPC (substituirá RNPC)
+-Criado design de gears (veículos)
+
+Removido:
+-RNPC
+
+-------------------------------------------------------------------------------------------------------:
+
+(Sexta-feira): 24/10
+
+Fixado:
+-Alguns warnings do mysql
+-bug crítico que fazia backpacks serem duplicados

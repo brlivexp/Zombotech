@@ -1,12 +1,17 @@
-#define CATEGORY_MEDIC 1
-#define CATEGORY_WEAPONS 2
-#define CATEGORY_HOUSING 3
-#define CATEGORY_STORAGE 4
-#define CATEGORY_TOOLS 5
-#define CATEGORY_EXTRA 6
+//--> Categories
+#define CATEGORY_MEDIC 0
+#define CATEGORY_WEAPONS 1
+#define CATEGORY_HOUSING 2
+#define CATEGORY_STORAGE 3
+#define CATEGORY_TOOLS 4
+#define CATEGORY_EXTRA 5
 
+//--> Defaults
 #define DEFAULT 19475//default object id
 
+//--> Limits
+#define MAX_CRAFTING_PAGE_ITEMS 16
+#define MAX_CRAFTING_CATEGORIES 6
 
 enum ItemCraftData
 {
@@ -23,6 +28,7 @@ new CraftingItems[][ItemCraftData] =
 {
 	{CATEGORY_MEDIC, 11747, 1, {19624, DEFAULT, DEFAULT, DEFAULT, DEFAULT}, {11736,  19874,  DEFAULT,  DEFAULT, DEFAULT}, {1, 1, 0, 0, 0}, 3000},
 	{CATEGORY_MEDIC, 11738, 1, {DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT}, {11736,  2891,  1580,  DEFAULT, DEFAULT}, {1, 1, 1, 0, 0}, 3000}
+
 };
 
 enum PlayerCraftingData

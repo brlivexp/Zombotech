@@ -56,10 +56,6 @@ stock F_CMD(value)
 
 public OnPlayerCommandText(playerid, cmdtext[])
 {
-	#if defined iCMD_OnPlayerCommand
-        iCMD_OnPlayerCommand(playerid, cmdtext);
-    #endif
-	
     _wrefCmdParams[0]=EOS;
 	new __@i = 2;
     __@i = strfind(cmdtext, " ");
@@ -82,16 +78,6 @@ public OnPlayerCommandText(playerid, cmdtext[])
 
 	return F_VALUE;
 }
-#if defined _ALS_OnPlayerCommandText
-    #undef OnPlayerCommandText
-#else
-    #define _ALS_OnPlayerCommandText
-#endif
-#define OnPlayerCommandText iCMD_OnPlayerCommand
-
-forward iCMD_OnPlayerCommand(playerid, cmdtext[]);
-
-
 
 public OnGameModeInit()
 {

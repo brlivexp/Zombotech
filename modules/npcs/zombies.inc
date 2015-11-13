@@ -4,7 +4,7 @@
 GenerateZombies()
 {
 	print("Preparing zombies data...");
-	for(new c; c < MAX_ZOMBIES; c++)
+	for(new c = MAX_ZOMBIES -1; c >  100; c--)
 	{
 		new skinid = ZombieSkins[MRandom(sizeof ZombieSkins)];
 
@@ -16,31 +16,29 @@ GenerateZombies()
 	}
 	print("Generating zombies...");
 
-	for(new z; z < MAX_ZOMBIES; z++)
-		SetTimerEx("ConnectZombie", 1700, false, "i", z);
+	for(new z = MAX_ZOMBIES -1; z > 100; z--)
+	{
+		new strname[24];
+		format(strname, 24, "Zombie[%d]", z);
+		FCNPC_Create(strname);
+	}
 	return 1;
 }
 
-fp ConnectZombie(z)
+public FCNPC_OnCreate(npcid)
 {
-	new strname[24];
-	format(strname, 24, "Zombie[%d]", z);
-	ZombieInfo[z][zombie_npcid] = ConnectRNPC(strname);
+    FCNPC_Spawn(npcid, ZombieInfo[npcid][zombie_skin], proxSpawn[npcid][0],proxSpawn[npcid][1],proxSpawn[npcid][2]+1.0);
+    SetTimerEx("OnZombieUpdate", 300, true, "i", npcid);
 	return 1;
 }
 
-OnZombieSpawn(playerid)
+public FCNPC_OnSpawn(npcid)
 {
-	SetPlayerPos(playerid, proxSpawn[playerid][0],proxSpawn[playerid][1],proxSpawn[playerid][2]+1.0);
-	SetPlayerSkin(playerid, ZombieInfo[playerid][zombie_skin]);
-	SetPlayerHealth(playerid, ZombieInfo[playerid][zombie_health]);
-	SetPlayerArmour(playerid, ZombieInfo[playerid][zombie_armour]);
-
-	new skinid = ZombieInfo[playerid][zombie_skin];
+	new skinid = ZombieInfo[npcid][zombie_skin];
 
 	for(new a; a < MAX_ATTACHMENTS; a++)
 	{
-		SetPlayerAttachedObject(playerid, a, 
+		SetPlayerAttachedObject(npcid, a,
 		AttachmentSkinInfo[skinid][a][AttachmentModel],
 		AttachmentSkinInfo[skinid][a][AttachmentBone],
 		AttachmentSkinInfo[skinid][a][AttachmentPosX],
@@ -53,21 +51,14 @@ OnZombieSpawn(playerid)
 		AttachmentSkinInfo[skinid][a][AttachmentSizeY],
 		AttachmentSkinInfo[skinid][a][AttachmentSizeZ],
 		0xFF << 24 | AttachmentSkinInfo[skinid][a][AttachmentColor1],
-		0xFF << 24 | AttachmentSkinInfo[skinid][a][AttachmentColor2]);		
+		0xFF << 24 | AttachmentSkinInfo[skinid][a][AttachmentColor2]);
 	}
-	SetPlayerPos(playerid, proxSpawn[playerid][0],proxSpawn[playerid][1],proxSpawn[playerid][2]+1.0);
-	
-	//alpha testing - move to movement states
-	
-
-	KillTimer(ZombieInfo[playerid][zombie_update_timer]);
-	ZombieInfo[playerid][zombie_update_timer] = SetTimerEx("OnZombieUpdate", 500, true, "i", playerid);
 	return 1;
 }
 
-fp OnZombieUpdate(playerid)
+fp OnZombieUpdate(npcid)
 {
-	switch(ZombieInfo[playerid][zombie_status])
+	switch(ZombieInfo[npcid][zombie_status])
 	{
 		case ZOMBIE_STATUS_NONE:
 		{
@@ -75,12 +66,10 @@ fp OnZombieUpdate(playerid)
 			{
 				if(!IsPlayerNPC(i))
 				{
-
-					
 					new Float:p[3];
-					GetPlayerPos(ZombieInfo[playerid][zombie_npcid], p[0], p[1], p[2]);
-					new type = ZombieInfo[playerid][zombie_skin];
-					if(IsPlayerInRangeOfPoint(i, ZombieClassInfo[type][DefaultDetectionRadius], p[0], p[1], p[2])) return SetZombieToFollowPlayer(playerid, i);
+					GetPlayerPos(npcid, p[0], p[1], p[2]);
+					new type = ZombieInfo[npcid][zombie_skin];
+					if(IsPlayerInRangeOfPoint(i, ZombieClassInfo[type][DefaultDetectionRadius], p[0], p[1], p[2])) return SetZombieToFollowPlayer(npcid, i);
 				}
 			}
 		}
@@ -118,16 +107,18 @@ fp OnZombieUpdate(playerid)
 
 SetZombieToFollowPlayer(zombieid, playerid)
 {
-	ApplyAnimation(ZombieInfo[zombieid][zombie_npcid], "PED", "WALK_DRUNK", 4.1, 1, 1, 1, 0, 0, 2);
+	ApplyAnimation(zombieid, "PED", "WALK_DRUNK", 4.1, 1, 1, 1, 0, 0, 2);
 	//target vars
 	new Float:tPosX, Float:tPosY, Float:tPosZ;
 	//zombie vars
-	new Float:zPosX, Float:zPosY, Float:zPosZ;
+	//new Float:zPosX, Float:zPosY, Float:zPosZ;
 	//get peds data
-	GetPlayerPos(zombieid, zPosX, zPosY, zPosZ);
-	GetPlayerPos(playerid, tPosX, tPosY, tPosZ);	
-	
-	MoveRNPC(ZombieInfo[zombieid][zombie_npcid], tPosX, tPosY, tPosZ, MOVE_SPEED_RUN);
-			
+	//GetPlayerPos(zombieid, zPosX, zPosY, zPosZ);
+	GetPlayerPos(playerid, tPosX, tPosY, tPosZ);
+
+	new Float:speed;
+	MRandFloatRange(-0.12123, 0.12123, speed);
+	FCNPC_GoTo(zombieid, tPosX, tPosY, tPosZ, MOVE_TYPE_RUN, 4.1, 1, speed);
+
 	return 1;
 }

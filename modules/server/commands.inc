@@ -7,6 +7,7 @@
 
 new SelectedSpawnItem[MAX_PLAYERS];
 
+
 public OnCommandCalled(playerid, params[])
 {
 	get_cmd_params(goto)
@@ -139,15 +140,6 @@ public OnCommandCalled(playerid, params[])
 	get_cmd_params(broken)
 	{
 		CreatePlayerItem(playerid, 19579, 1, 0.0, 0, 0);
-		return 1;
-	}
-	get_cmd_params(hunger)
-	{
-		new percent;
-		if(sscanf(params, "d", percent)) return 0;
-
-		SetProgressLevel(playerid, HUDText[playerid][16], float(percent), 45.0, 153.0, 1.0);
-		PlayerTextDrawShow(playerid, HUDText[playerid][16]);
 		return 1;
 	}
 	get_cmd_params(jetpack)

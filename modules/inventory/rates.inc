@@ -65,7 +65,7 @@ stock RegenerateLoots()
 			{
 				
 				new Cache:qresult = mysql_query(MySQL, "SELECT * FROM `items` ORDER BY `id` DESC LIMIT 1;");
-				lastitemid = cache_get_field_content_int(0, "id") + 1;
+				lastitemid = cache_num_rows() ? cache_get_field_content_int(0, "id") + 1 : 1;
 				cache_delete(qresult);
 			}
 			else lastitemid++;	

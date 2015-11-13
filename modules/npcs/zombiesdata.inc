@@ -3,7 +3,7 @@
 #define ZOMBIE_STATUS_ROAMING 1
 #define ZOMBIE_STATUS_FOLLOWING 2
 #define ZOMBIE_STATUS_BLOCKED 3
-#define ZOMBIE_STATUS_BITING 4 
+#define ZOMBIE_STATUS_BITING 4
 #define ZOMBIE_STATUS_DEAD 5
 #define ZOMBIE_STATUS_CALCULATING 6
 
@@ -17,7 +17,7 @@
 #define COLLISION_TYPE_STUMBLE 0
 #define COLLISION_TYPE_STOP 1
 
-#define MAX_ZOMBIES (10)
+#define MAX_ZOMBIES (1001)
 #define MAX_ATTACHMENTS 10
 #define MAX_SKINS 	211
 
@@ -44,7 +44,7 @@ enum ZombieClassData
 };
 new ZombieClassInfo[MAX_SKINS][ZombieClassData];
 
-new ZombieSkins[] = 
+new ZombieSkins[] =
 {
 	4,
 	162
@@ -70,7 +70,6 @@ new AttachmentSkinInfo[MAX_SKINS][MAX_ATTACHMENTS][AttachmentSkinData];
 
 enum ZombiesData
 {
-	zombie_npcid,
 	zombie_type,
 	zombie_skin,
 	zombie_attachment[MAX_ATTACHMENTS],//SetPlayerAttached object - has bone
@@ -89,7 +88,7 @@ enum ZombiesData
 new ZombieInfo[MAX_ZOMBIES][ZombiesData];
 
 LoadZombieSkins()
-{	
+{
 	//skin 4
 	SetupZombieSkinData(4, 0, 3003, 2, 0.119032, 0.077540, -0.035783, 0.000000, 0.000000, 0.000000, 0.400000, 0.400000, 0.400000, 0xFFFFFF, 0xFFFFFF);
 	SetupZombieSkinData(4, 1, 3003, 2, 0.115167, 0.078132, 0.033312, 0.000000, 0.000000, 0.000000, 0.400000, 0.400000, 0.400000, 0xFFFFFF, 0xFFFFFF);
@@ -100,8 +99,8 @@ LoadZombieSkins()
 	SetupZombieSkinData(4, 6, 2804, 7, 0.333616, 0.078171, 0.014960, 61.066390, 357.074951, 90.000000, 0.400000, 0.600000, 0.400000, 0xAF111C, 0xAF111C);
 	SetupZombieSkinData(4, 7, 2804, 8, 0.333616, 0.044793, -0.067208, 270.000000, 23.960044, 90.000000, 0.400000, 0.600000, 0.400000, 0xAF111C, 0xAF111C);
 	SetupZombieSkinData(4, 8, 2804, 12, 0.233839, 0.032086, -0.000254, 270.000000, 1.050521, 90.000000, 0.300000, 0.600000, 0.400000, 0xAF111C, 0xAF111C);
-	SetupZombieSkinData(4, 9, 2804, 12, 0.256693, -0.064328, -0.009049, 270.000000, 350.445190, 90.000000, 0.300000, 0.600000, 0.400000, 0xAF111C, 0xAF111C);	
-	
+	SetupZombieSkinData(4, 9, 2804, 12, 0.256693, -0.064328, -0.009049, 270.000000, 350.445190, 90.000000, 0.300000, 0.600000, 0.400000, 0xAF111C, 0xAF111C);
+
 	//skin 162
 	SetupZombieSkinData(162, 0, 3003, 2, 0.085594, 0.082489, 0.028680, 0.000000, 0.000000, 0.000000, 0.613528, 0.576035, 0.475660, 0xFFFFFF, 0xFFFFFF ); // k_poolballcue - olho esquerdo
 	SetupZombieSkinData(162, 1, 3003, 2, 0.082179, 0.079389, -0.033194, 345.747283, 63.987533, 0.000000, 0.613528, 0.576035, 0.475660, 0xFFFFFF, 0xFFFFFF); // k_poolballcue - olho direito

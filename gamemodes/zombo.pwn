@@ -15,19 +15,20 @@
 		─██████████████████─██████████████─██████──────────██████─████████████████─██████████████─
 		──────────────────────────────────────────────────────────────────────────────────────────
 ####################################################################################################################
-[*] File: zombo.pwn 
-####################################################################################################################																					 
+[*] File: zombo.pwn
+####################################################################################################################
 [*] Description: Main gamemode file
 
 
-####################################################################################################################				                                                                      
-[*] Author: n0minal	
+####################################################################################################################
+[*] Author: n0minal
 ####################################################################################################################
 [*] Notes: -
 
 
 ####################################################################################################################*/
 #include <a_samp>
+#include <fcnpc>
 #include <colAndreas>
 #include <a_mysql>
 #include <progress2>
@@ -36,10 +37,11 @@
 #include <YSF>
 #include <CTime>
 #include <ibranch>
-#include <iCMD>
 #include <cstl>
-#include <rnpc>
 #include <mrandom>
+#include <iCMD>
+#include <mapandreas>
+
 /*********************************************************************************************************/
 /*                                       SERVER DEFINES                                                  */
 /*********************************************************************************************************/
@@ -61,6 +63,7 @@ new szStrsPrintf[1024];
 /*********************************************************************************************************/
 /*                                       SERVER INCLUDES                                                 */
 /*********************************************************************************************************/
+
 #include "../modules/server/utils.inc"
 #include "../modules/sqlite/utils.inc"
 #include "../modules/player/spawns.inc"
@@ -72,7 +75,6 @@ new szStrsPrintf[1024];
 #include "../modules/server/configs.inc"
 #include "../modules/saves/files.inc"
 #include "../modules/textdraws/textdraws.inc"
-#include "../modules/textdraws/iprogress.inc"
 #include "../modules/admin/main.inc"
 #include "../modules/hud/main.inc"
 #include "../modules/player/infobox.inc"
@@ -85,23 +87,32 @@ new szStrsPrintf[1024];
 #include "../modules/player/anims.inc"
 #include "../modules/npcs/zombies.inc"
 #include "../modules/server/commands.inc"
+
 /*********************************************************************************************************/
 /*                                       SERVER CALLBACKS                                                */
 /*********************************************************************************************************/
 
 #pragma dynamic 30000
 
-main( ) { }
+main( ) {
+
+	
+ }
 
 
 public OnGameModeInit()
 {
 
 	CA_Init();
+
 	MapAndreas_Init(MAP_ANDREAS_MODE_FULL);
+
+	if(!FCNPC_InitZMap("scriptfiles/ZMap.hmap")) return print("map file not loaded");
+	FCNPC_SetUpdateRate(80);
+
     UsePlayerPedAnims();
    	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, 999);
-	
+
 	print("-------------------------------------");
 	print("Loading database...");
 	print("-------------------------------------");
@@ -137,12 +148,12 @@ public OnGameModeInit()
 	print("Loading player classes...");
 	print("-------------------------------------");
 	LoadClasses();
-	
+
 	print("-------------------------------------");
 	print("Loading black map...");
-	print("-------------------------------------");	
+	print("-------------------------------------");
 	blackmap = GangZoneCreate(-3500.0,-3500.0,3500.0,3500.0);
-	
+
 	print("-------------------------------------");
 	print("Generating dead bodies...");
 	print("-------------------------------------");
@@ -152,7 +163,7 @@ public OnGameModeInit()
 	print("Generating dropped objects...");
 	print("-------------------------------------");
 	ResetDroppedObjects();
-	
+
 	print("-------------------------------------");
 	print("Loading custom maps....");
 	print("-------------------------------------");
@@ -163,8 +174,8 @@ public OnGameModeInit()
 	print("-------------------------------------");
 	LoadZombieSkins();
 	LoadZombiesClasses();
-	
-    
+
+
     print("-------------------------------------");
     print("Loading server utils...");
     print("-------------------------------------");
@@ -172,7 +183,7 @@ public OnGameModeInit()
 
  	SetWeather(26);
  	SetWorldTime(02);
- 	
+
 	ShowPlayerMarkers(PLAYER_MARKERS_MODE_STREAMED);
 	LimitPlayerMarkerRadius(5.0);
 	EnableStuntBonusForAll(0);
@@ -190,7 +201,7 @@ public OnGameModeInit()
 	print("-------------------------------------");
 	LoadServerTextDraws();
 
-	
+
 	print("-------------------------------------");
 	print("Generating zombies...");
 	print("-------------------------------------");
@@ -205,7 +216,7 @@ public OnGameModeExit()
 }
 
 public OnPlayerConnect(playerid)
-{	
+{
 	GetVectorPath(gSpawns, MRandom(MAX_SPAWNS), proxSpawn[playerid][0], proxSpawn[playerid][1], proxSpawn[playerid][2]);
 
 	if(!IsPlayerNPC(playerid))
@@ -218,14 +229,14 @@ public OnPlayerConnect(playerid)
    		ResetInventoryInfo(playerid);
    		ResetAllowanceInfo(playerid);
 	    RemoveMaps(playerid);
-	    CancelSelectTextDraw(playerid);
+	    //CancelSelectTextDraw(playerid);
 	    LoadPlayerTextDraws(playerid);
 	    ClearInfoBoxData(playerid);
 	    ResetInventoryInfo(playerid);
 	    CleanPlayerLoginData(playerid);
-	    ResetPlayerAttachments(playerid);
+	  //  ResetPlayerAttachments(playerid);
 		SetTimerEx("OnPlayerConnected", 100, false, "i", playerid);
-		EnablePlayerCameraTarget(playerid, 1);		
+		//EnablePlayerCameraTarget(playerid, 1);
 	}
 	else
 		OnPlayerSpawn(playerid);
@@ -238,23 +249,23 @@ fp OnPlayerConnected(playerid)
 	if(IsPlayerNPC(playerid)) return 1;
 	TogglePlayerSpectating(playerid, 1);
 
-    SetPlayerWeather(playerid, 1);
+ 	SetPlayerWeather(playerid, 1);
 	InterpolateCameraPos(playerid, -1983.1592, 728.8914, 46.9742, -1940.9475, 729.7084, 46.8430, 4000, CAMERA_MOVE);
 	InterpolateCameraLookAt(playerid, -1983.1118, 727.8882, 46.9843, -1940.9001, 728.7051, 46.7380, 4000, CAMERA_MOVE);
-		
+
 	SetTimerEx("OnPlayerInterpolate", 7000, false, "i", playerid);
-	
+
 	SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, "");
 	SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, "");
 	SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, "");
 	SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, ""); SendClientMessage(playerid, -1, "");
-	
+
 	return true;
 }
 
 fp OnPlayerInterpolate(playerid)
 {
-	ShowPlayerMainMenu(playerid);	
+	ShowPlayerMainMenu(playerid);
 	PlayerUpdateTimer[playerid] = SetTimerEx("OnPlayerUpdateEx", 300, true, "i", playerid);
 	return true;
 }
@@ -271,7 +282,7 @@ fp OnPlayerUpdateEx(playerid)
 		if(DroppedItem[item][DItemObj] == GetPlayerCameraObject(playerid))
 		{
 			PlayerTargetItem[playerid] = item;
-		    return ShowPlayerLootInfo(playerid, item);	
+		    return ShowPlayerLootInfo(playerid, item);
 		}
 	}
 
@@ -286,7 +297,7 @@ public OnPlayerRequestSpawn(playerid)
 	{
 		SetPlayerVirtualWorld(playerid, 0);
 		ShowPlayerHUD(playerid);
-	}	
+	}
 	return 1;
 }
 
@@ -296,13 +307,13 @@ public OnPlayerRequestClass(playerid, classid)
 	PlayerInfo[playerid][RequestingClass] = true;
 	if(GetPVarInt(playerid, "SpawnLiberado")) return true;
 	return false;
-	
+
 }
 
 public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
 {
     if(IsPlayerAdmin(playerid)) return SetPlayerPosFindZ(playerid, fX, fY, fZ);
-    
+
     return true;
 }
 
@@ -324,7 +335,7 @@ public OnPlayerSpawn(playerid)
 {
 	if(!IsPlayerNPC(playerid))
 	{
-		if(PlayerLoginInfo[playerid][FirstSpawn]) 
+		if(PlayerLoginInfo[playerid][FirstSpawn])
 		{
 			LoadPlayerItems(playerid);
 			PlayerLoginInfo[playerid][FirstSpawn] = false;
@@ -335,7 +346,7 @@ public OnPlayerSpawn(playerid)
 			ReloadPlayerAttachments(playerid);
 			ReloadPlayerWeapons(playerid);
 			SetPlayerPos(playerid, proxSpawn[playerid][0],proxSpawn[playerid][1],proxSpawn[playerid][2]+1.0);
-		} 
+		}
 
 		PlayerInfo[playerid][RequestingClass] = false;
 		SetCameraBehindPlayer(playerid);
@@ -343,11 +354,10 @@ public OnPlayerSpawn(playerid)
 		//ShowPlayerAim(playerid);
     }
 	SetTimerEx("ActiveSpawn", 500, false,  "d", playerid);
-	
-	if(IsPlayerNPC(playerid)) 
+
+	if(IsPlayerNPC(playerid))
 	{
 		SetPVarInt(playerid, "SpawnLiberado", 1);
-		OnZombieSpawn(playerid); 	
 		return true;
 	}
 	return true;
@@ -368,7 +378,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		{
 			ShowPlayerHUD(playerid);
 			HidePlayerInventory(playerid);
-		} 
+		}
 	}
 	if(newkeys & KEY_NO && PlayerTargetItem[playerid] && !IsPlayerInAnyVehicle(playerid))
 	{
@@ -403,7 +413,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
  	if(playertextid == InventoryText[playerid][5]) HidePlayerInventory(playerid);
 	if(playertextid == InventoryText[playerid][63])
 	{
-		if(CurrentInventoryPage[playerid] == 1) return 0;	    
+		if(CurrentInventoryPage[playerid] == 1) return 0;
 	    CurrentInventoryPage[playerid] --;
 		LoadInventoryPageItems(playerid);
 		LoadPlayerBagInfo(playerid);
@@ -416,13 +426,13 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	    if(CurrentInventoryPage[playerid] == 2 && PlayerInfo[playerid][bagtype] < 3) return 0;
 	    if(CurrentInventoryPage[playerid] == 3 && PlayerInfo[playerid][bagtype] < 4) return 0;
 	    if(CurrentInventoryPage[playerid] == 4) return 0;
-	    
+
 		CurrentInventoryPage[playerid] ++;
 		LoadInventoryPageItems(playerid);
 		LoadPlayerBagInfo(playerid);
-		return 1;	
+		return 1;
 	}
-	
+
 	if(playertextid == InventoryText[playerid][31] && PlayerEquippedItem[playerid][EItemID][0] && !UnableToEquip[playerid]) return OnPlayerUnequipItem(playerid, 0);//weapon 0
 	if(playertextid == InventoryText[playerid][36] && PlayerEquippedItem[playerid][EItemID][1] && !UnableToEquip[playerid]) return OnPlayerUnequipItem(playerid, 1);//weapon 1
 	if(playertextid == InventoryText[playerid][41] && PlayerEquippedItem[playerid][EItemID][2] && !UnableToEquip[playerid]) return OnPlayerUnequipItem(playerid, 2);//weapon 2
@@ -434,10 +444,10 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 
 
 	for(new i = 20; i < 30; i++) if(playertextid == InventoryText[playerid][i]) return OnPlayerSelectSlot(playerid, i, i - 20, CurrentInventoryPage[playerid]);
-	
+
 	if(playertextid == InventoryText[playerid][0])
 	{
-		
+
 		new slot = PlayerSelectedSlot[playerid];
 
 		if(IsObjectUsable(PlayerItem[playerid][ItemModel][slot])) return OnPlayerUseItem(playerid, PlayerItem[playerid][ItemModel][slot], slot, PlayerItem[playerid][ItemID][slot],  1);
@@ -447,7 +457,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	if(playertextid == InventoryText[playerid][1])
 	{
 		new slot = PlayerSelectedSlot[playerid];
-		new itemid = PlayerItem[playerid][ItemID][slot];		
+		new itemid = PlayerItem[playerid][ItemID][slot];
 		new model = PlayerItem[playerid][ItemModel][slot];
 		new amount = PlayerItem[playerid][ItemAmount][slot];
 		new Float:durability = PlayerItem[playerid][ItemDurability][slot];
@@ -463,7 +473,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 		if(UnableToDrop[playerid]) return 0;
 		if(IsPlayerInAnyVehicle(playerid)) return SendInfoText(playerid, "Inventory", "You can't drop items while driver or passenger", 4000);
 		new slot = PlayerSelectedSlot[playerid];
-		new itemid = PlayerItem[playerid][ItemID][slot];		
+		new itemid = PlayerItem[playerid][ItemID][slot];
 		new model = PlayerItem[playerid][ItemModel][slot];
 		new amount = PlayerItem[playerid][ItemAmount][slot];
 		new Float:durability = PlayerItem[playerid][ItemDurability][slot];
@@ -482,7 +492,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 				SetTimerEx("SetPlayerAbleToDrop", 1500, false, "i", playerid);
 				return SendInfoText(playerid, "Inventory", "Too much items nearby, you cannot drop this item here.", 4000);
 			}
-				
+
 		}
 		if(slot == -1 || itemid == -1 || !itemid || !model) return SendInfoText(playerid, "Inventory", "Empty slot or invalid item!", 4000);
 		return DropPlayerItem(playerid, itemid,  model, amount, durability, itime, expirable);
@@ -494,7 +504,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 		if(!PlayerItem[playerid][ItemID][slot] || PlayerItem[playerid][ItemID][slot] == -1 || PlayerItem[playerid][ItemID][slot] == DEFAULT_OBJECT_MODEL) return SendInfoText(playerid, "Inventory", "You must select a item to split.", 3000);
 		if(PlayerItem[playerid][ItemTime][slot]) return SendInfoText(playerid, "Inventory", "You cannot split an expirable item!", 3000);
 		if(PlayerItem[playerid][ItemAmount][slot] < 50) return SendInfoText(playerid, "Inventory", "You cannot split item with this item (minimum amount: 50)!", 3000);
-		
+
 		SplitPlayerItem(playerid, slot);
 		return 1;
 	}
@@ -561,14 +571,14 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 		if(IsPlayerInInventory(playerid)) HidePlayerInventory(playerid);
 		if(PlayerLoginInfo[playerid][Selecting]) SelectTextDraw(playerid, 0xFF0000FF);
 	}
-	if(clickedid == LoginScreenStatic[19] && PlayerLoginInfo[playerid][PlayerLoginName] && PlayerLoginInfo[playerid][PlayerLoginPassword]) VerifyPlayerLogin(playerid, PlayerLoginInfo[playerid][PlayerLoginName], PlayerLoginInfo[playerid][PlayerLoginPassword]); 
+	if(clickedid == LoginScreenStatic[19] && PlayerLoginInfo[playerid][PlayerLoginName] && PlayerLoginInfo[playerid][PlayerLoginPassword]) VerifyPlayerLogin(playerid, PlayerLoginInfo[playerid][PlayerLoginName], PlayerLoginInfo[playerid][PlayerLoginPassword]);
 	if(clickedid == StartScreenStatic[25]) OnPlayerSelectMenuOption(playerid, 0);
 	if(clickedid == StartScreenStatic[26]) OnPlayerSelectMenuOption(playerid, 1);
 	if(clickedid == StartScreenStatic[29]) OnPlayerSelectMenuOption(playerid, 4);
 	if(clickedid == LoginScreenStatic[22] || clickedid == RegisterScreenStatic[25] || clickedid == CreditScreenStatic[20]) OnPlayerSelectMenuOption(playerid, 5);
 	if(clickedid == RegisterScreenStatic[22])
 	{
-		if(3 > strlen(PlayerLoginInfo[playerid][PlayerRegisterName]) || 
+		if(3 > strlen(PlayerLoginInfo[playerid][PlayerRegisterName]) ||
 		strlen(PlayerLoginInfo[playerid][PlayerRegisterName]) > 17 ||
 		3 > strlen(PlayerLoginInfo[playerid][PlayerRegisterPassword]) ||
 		strlen(PlayerLoginInfo[playerid][PlayerRegisterPassword]) > 16 ||
@@ -576,7 +586,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 		strlen(PlayerLoginInfo[playerid][PlayerRegisterRePassword]) > 16 ||
 		6 > strlen(PlayerLoginInfo[playerid][PlayerRegisterMail]) ||
 		strlen(PlayerLoginInfo[playerid][PlayerRegisterMail]) > 32)	return SendInfoText(playerid, "Registration Failure", "You left some empty field, complete the fields with your information to proceed with your registration!", 4000);
-			
+
 		if(strcmp(PlayerLoginInfo[playerid][PlayerRegisterPassword], PlayerLoginInfo[playerid][PlayerRegisterRePassword]))
 			return SendInfoText(playerid, "Registration Failure", "The inputted passwords doesn't match, please check your password to continue!", 6000);
 
@@ -591,11 +601,20 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 		}
 		cache_delete(result);
 
+	#if defined SHA256_PassHash
+
 		new HashedPass[32];
 		SHA256_PassHash(PlayerLoginInfo[playerid][PlayerRegisterRePassword], "ztah", HashedPass, sizeof HashedPass);
-		
 		mysql_format(MySQL, query, 256, "INSERT INTO `users` VALUES (NULL, '%s', '%s', '%s',   '0',  '0',  '0',  '0',  '0',  '0',  '100',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1');", PlayerLoginInfo[playerid][PlayerRegisterName], HashedPass, PlayerLoginInfo[playerid][PlayerRegisterMail]);
 		mysql_tquery(MySQL, query, "OnPlayerRegister", "i", playerid);
+
+	#else
+
+		mysql_format(MySQL, query, 256, "INSERT INTO `users` VALUES (NULL, '%s', '%s', '%s',   '0',  '0',  '0',  '0',  '0',  '0',  '100',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '1');", PlayerLoginInfo[playerid][PlayerRegisterName], PlayerLoginInfo[playerid][PlayerRegisterRePassword], PlayerLoginInfo[playerid][PlayerRegisterMail]);
+		mysql_tquery(MySQL, query, "OnPlayerRegister", "i", playerid);
+
+	#endif
+
 		return 1;
 	}
 	return 1;
@@ -606,7 +625,7 @@ public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Fl
 	if(!response)//discard changes
 	{
 		SendClientMessage(playerid, 0x00FF00, "Attached object edition has been discarded.");
-        SetPlayerAttachedObject(playerid, index, modelid, boneid, 
+        SetPlayerAttachedObject(playerid, index, modelid, boneid,
        	PlayerEquippedItem[playerid][EItemOffX][index],
         PlayerEquippedItem[playerid][EItemOffY][index],
         PlayerEquippedItem[playerid][EItemOffZ][index],
@@ -624,7 +643,7 @@ public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Fl
 		if(-0.5 < fOffsetX > 0.5 || -0.5 < fOffsetY > 0.5 || -0.3 < fOffsetZ > 0.3)
 		{
 			SendClientMessage(playerid, 0xFF0000FF, "Attached object offsets too far from character, all the changes has been cleared!");
-			SetPlayerAttachedObject(playerid, index, modelid, boneid, 
+			SetPlayerAttachedObject(playerid, index, modelid, boneid,
 	        PlayerEquippedItem[playerid][EItemOffX][index],
 	        PlayerEquippedItem[playerid][EItemOffY][index],
 	        PlayerEquippedItem[playerid][EItemOffZ][index],
@@ -641,7 +660,7 @@ public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Fl
 		if(-1.5 < fScaleX > 1.5 || -1.5 < fScaleY >  1.5 || -1.5 < fScaleZ > 1.5)
 		{
 			SendClientMessage(playerid, 0xFF0000FF, "Attached object sizes too big, all the changes has been cleared!");
-			SetPlayerAttachedObject(playerid, index, modelid, boneid, 
+			SetPlayerAttachedObject(playerid, index, modelid, boneid,
 	        PlayerEquippedItem[playerid][EItemOffX][index],
 	        PlayerEquippedItem[playerid][EItemOffY][index],
 	        PlayerEquippedItem[playerid][EItemOffZ][index],
@@ -681,19 +700,19 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_SPAWN_ITEMS_AMOUNT:
 		{
 			if(!response) return SelectedSpawnItem[playerid] = 0;
-			
+
 			return CreatePlayerItem(playerid, ObjectsInfo[SelectedSpawnItem[playerid]][Object_Model], strval(inputtext), 100.0, 0, 0);
 		}
 		case DIALOG_LOGIN_NAME:
 		{
 			if(~strfind(inputtext, ";") || ~strfind(inputtext, "--")) return SendInfoText(playerid, "Warning", "Your information contain unallowed characters", 3000);
-			if(response && 3 < strlen(inputtext) < 19) OnPlayerInputField(playerid, FIELD_LOGIN_NAME, inputtext); 
+			if(response && 3 < strlen(inputtext) < 19) OnPlayerInputField(playerid, FIELD_LOGIN_NAME, inputtext);
 			else OnPlayerInputField(playerid, INVALID_FIELD_ID, "");
 		}
 		case DIALOG_LOGIN_PASSWORD:
 		{
 			if(~strfind(inputtext, ";") || ~strfind(inputtext, "--")) return SendInfoText(playerid, "Warning", "Your information contain unallowed characters", 3000);
-			if(response && 3 < strlen(inputtext) < 17) OnPlayerInputField(playerid, FIELD_LOGIN_PASSWORD, inputtext); 
+			if(response && 3 < strlen(inputtext) < 17) OnPlayerInputField(playerid, FIELD_LOGIN_PASSWORD, inputtext);
 			else OnPlayerInputField(playerid, INVALID_FIELD_ID, "");
 		}
 		case DIALOG_REGISTER_NAME:
@@ -736,7 +755,7 @@ public OnPlayerDeath(playerid, killerid, reason)
 public OnPlayerDisconnect(playerid, reason)
 {
 	if(!IsPlayerNPC(playerid))
-	{		
+	{
 		if(PlayerInfo[playerid][logged] && !PlayerInfo[playerid][RequestingClass]) PlayerFileSave(playerid);
 		KillTimer(PlayerUpdateTimer[playerid]);
 		PlayerInfo[playerid][logged] = false;

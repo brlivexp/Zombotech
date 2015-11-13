@@ -267,6 +267,8 @@ SetPlayerBagType(playerid, type, itemid, model, Float:durability, time, expirabl
 
 			if(!loaded)
 			{
+				mysql_format(MySQL, query, 512, "DELETE FROM `equiped_items` WHERE `slotid` = '8' AND `playerid` = '%d';", PlayerInfo[playerid][pid]);
+				mysql_tquery(MySQL, query, "", "");
 				PlayerEquippedItem[playerid][EItemOffX][8] = -0.168829;
 				PlayerEquippedItem[playerid][EItemOffY][8] = -0.077197;
 				PlayerEquippedItem[playerid][EItemOffZ][8] = 0.0;
@@ -322,6 +324,8 @@ SetPlayerBagType(playerid, type, itemid, model, Float:durability, time, expirabl
 
 			if(!loaded)//if server needs to create the table
 			{
+				mysql_format(MySQL, query, 256, "DELETE FROM `equiped_items` WHERE `slotid` = '8' AND `playerid` = '%d';", PlayerInfo[playerid][pid]);
+				mysql_tquery(MySQL, query, "", "");
 				PlayerEquippedItem[playerid][EItemOffX][8] = 0.057849;
 				PlayerEquippedItem[playerid][EItemOffY][8] = -0.123179;
 				PlayerEquippedItem[playerid][EItemOffZ][8] = -0.027480;
@@ -377,6 +381,8 @@ SetPlayerBagType(playerid, type, itemid, model, Float:durability, time, expirabl
 
 			if(!loaded)
 			{
+				mysql_format(MySQL, query, 256, "DELETE FROM `equiped_items` WHERE `slotid` = '8' AND `playerid` = '%d';", PlayerInfo[playerid][pid]);
+				mysql_tquery(MySQL, query, "", "");
 				PlayerEquippedItem[playerid][EItemOffX][8] = 0.100000;
 				PlayerEquippedItem[playerid][EItemOffY][8] = -0.050000;
 				PlayerEquippedItem[playerid][EItemOffZ][8] = 0.0;
@@ -1064,10 +1070,10 @@ DropPlayerItem(playerid, itemid,  model, amount, Float:durability = 100.0, itemt
 LoadPlayerItems(playerid)
 {
 	new query[512];
-	mysql_format(MySQL, query, sizeof(query), "SELECT * FROM `items` WHERE `owner` = '%d'", PlayerInfo[playerid][pid]);
+	mysql_format(MySQL, query, sizeof(query), "SELECT * FROM `items` WHERE `owner` = '%d' LIMIT 40;", PlayerInfo[playerid][pid]);
 	mysql_tquery(MySQL, query, "OnLoadPlayerItems", "d", playerid);
 	
-	mysql_format(MySQL, query, sizeof(query), "SELECT * FROM `equiped_items` WHERE `playerid` = '%d'", PlayerInfo[playerid][pid]);
+	mysql_format(MySQL, query, sizeof(query), "SELECT * FROM `equiped_items` WHERE `playerid` = '%d' LIMIT 8", PlayerInfo[playerid][pid]);
 	mysql_tquery(MySQL, query, "OnLoadEquippedItems", "d",  playerid);
 	
 	return 1;

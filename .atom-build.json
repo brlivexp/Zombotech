@@ -1,0 +1,9 @@
+{
+  "cmd": "pawncc.exe",
+  "args": [ "{FILE_ACTIVE}", "-i{PROJECT_PATH}", "-D{PROJECT_PATH}\\gamemodes", "-r{PROJECT_PATH}\\DOCS\\{FILE_ACTIVE_NAME_BASE}.xhtml", "-;+", "-(+", "-d0 -O1" ],
+  "sh": false,
+  "cwd": "{PROJECT_PATH}/pawno",
+  "env": {
+
+  }
+}

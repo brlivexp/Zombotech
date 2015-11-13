@@ -2,7 +2,7 @@
 #define		mysql_host		"127.0.0.1"//Não usar "localhost" para conexão!
 #define		mysql_user		"root"
 #define		mysql_pass		""
-#define		mysql_data		"dayz"
+#define		mysql_data		"zombo"
 #define		mysql_port		3306
 //////////////////////////////////////////
 #define		DEFAULT_OBJECT_MODEL		19475

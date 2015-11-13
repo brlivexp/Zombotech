@@ -78,9 +78,20 @@ public OnPlayerFileLoad(playerid)
 
 VerifyPlayerLogin(playerid, nickname[], player_password[])
 {
+
+#if defined SHA256_PassHash
+
 	new query[256], HashedPass[32];
 	SHA256_PassHash(player_password, "ztah", HashedPass, sizeof HashedPass);
 	mysql_format(MySQL, query, 256, "SELECT * FROM `users` WHERE `name` = '%s' AND `password` = '%s'", nickname, HashedPass);
+
+#else
+
+	new query[256];
+	mysql_format(MySQL, query, 256, "SELECT * FROM `users` WHERE `name` = '%s' AND `password` = '%s'", nickname, player_password);
+
+#endif
+
 	new Cache:result = mysql_query(MySQL, query, true);
 	
 	if(cache_num_rows())
